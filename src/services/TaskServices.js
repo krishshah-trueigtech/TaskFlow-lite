@@ -1,12 +1,13 @@
 import axios from "axios";
 
-export const createTask = async ({ title, priority, dueDate }) => {
+export const createTask = async ({ title, priority, dueDate, assignee }) => {
   const response = await axios.post("http://localhost:3000/tasks", {
     id: Date.now(),
     title: title,
     status: "to-do",
     priority: priority,
     dueDate: dueDate,
+    assignee: assignee,
   });
   if (response.status !== 201) throw Error("Failed to create task");
   return response.data;
@@ -17,12 +18,20 @@ export const fetchTasks = async () => {
   return response.data;
 };
 
-export const updateTask = async ({ id, title, priority, status, dueDate }) => {
+export const updateTask = async ({
+  id,
+  title,
+  priority,
+  status,
+  dueDate,
+  assignee,
+}) => {
   const response = await axios.patch(`http://localhost:3000/tasks/${id}`, {
     title: title,
     status: status,
     priority: priority,
     dueDate: dueDate,
+    assignee: assignee,
   });
   if (response.status !== 200) throw Error("Failed to update task");
 
