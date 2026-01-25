@@ -1,20 +1,7 @@
 import axios from "axios";
 
-export const createTask = async ({
-  id,
-  title,
-  priority,
-  dueDate,
-  assignee,
-}) => {
-  const response = await axios.post("http://localhost:3000/tasks", {
-    id: id,
-    title: title,
-    status: "to-do",
-    priority: priority,
-    dueDate: dueDate,
-    assignee: assignee,
-  });
+export const createTask = async (taskData) => {
+  const response = await axios.post("http://localhost:3000/tasks", taskData);
   if (response.status !== 201) throw Error("Failed to create task");
   return response.data;
 };
