@@ -1,0 +1,19 @@
+{
+  "users": [
+    {
+      "username": "admin",
+      "email": "admin@gmail.com",
+      "password": "Admin@123"
+    }
+  ],
+  "tasks": [
+    {
+      "id": "1",
+      "title": "Setup Project",
+      "status": "done",
+      "priority": "high",
+      "dueDate": "2026-02-01",
+      "assignee": "admin"
+    }
+  ]
+}
