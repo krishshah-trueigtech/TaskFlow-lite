@@ -26,8 +26,9 @@ const LoginForm = () => {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className="email">
-        <label>Email</label>
+        <label htmlFor="email">Email</label>
         <input
+          id="email"
           {...register("email", {
             required: "Email is required",
             pattern: {
@@ -39,8 +40,9 @@ const LoginForm = () => {
         {errors.email && <span>{errors.email.message}</span>}
       </div>
       <div className="password">
-        <label>Password</label>
+        <label htmlFor="password">Password</label>
         <input
+          id="password"
           type="password"
           {...register("password", {
             required: "Password is required",

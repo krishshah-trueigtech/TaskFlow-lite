@@ -11,7 +11,7 @@ const TaskForm = () => {
   } = useForm();
 
   const { createTask, updateTask, editingTask, closeModal } = useTaskContext();
-  const today = new Date().toISOString().split("T")[0];
+  const today = new Date().toLocaleDateString('en-CA');
 
   useEffect(() => {
     if (editingTask) {
@@ -44,12 +44,15 @@ const TaskForm = () => {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className="title">
-        <label>Title</label>
-        <input {...register("title", { required: "Please Enter a title" })} />
+        <label htmlFor="title">Title</label>
+        <input
+          id="title"
+          {...register("title", { required: "Please Enter a title" })}
+        />
         {errors.title && <span className="error">{errors.title.message}</span>}
       </div>
       <div className="priority">
-        <label>Priority: </label>
+        <label htmlFor="priority">Priority: </label>
         <label>
           <input
             type="radio"
@@ -79,9 +82,10 @@ const TaskForm = () => {
         )}
       </div>
       <div className="dueDate">
-        <label>Due Date</label>
+        <label htmlFor="dueDate">Due Date</label>
         <input
           type="date"
+          id="dueDate"
           {...register("dueDate", {
             required: "Due date is required",
             validate: (value) =>
@@ -93,8 +97,9 @@ const TaskForm = () => {
         )}
       </div>
       <div className="assignee">
-        <label>Assignee</label>
+        <label htmlFor="assignee">Assignee</label>
         <input
+          id="assignee"
           {...register("assignee", { required: "Please select an assignee" })}
         />
         {!errors.dueDate && errors.assignee && (
