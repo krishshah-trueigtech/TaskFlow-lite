@@ -35,34 +35,34 @@ export const useTasks = () => {
   };
 
   const updateTask = async (taskData) => {
-    setLoading(true);
-    try {
-      const updatedTask = await TaskServices.updateTask(taskData);
+    const previousTasks = [...tasks];
 
-      setTasks((prev) =>
-        prev.map((task) => (task.id === taskData.id ? updatedTask : task)),
-      );
+    setTasks((prev) =>
+      prev.map((task) =>
+        task.id === taskData.id ? { ...task, ...taskData } : task,
+      ),
+    );
+    try {
+      await TaskServices.updateTask(taskData);
       return true;
     } catch (err) {
+      setTasks(previousTasks);
       setError(err);
       return false;
-    } finally {
-      setLoading(false);
     }
   };
 
   const deleteTask = async (id) => {
-    setLoading(true);
+    const previousTasks = [...tasks];
+    setTasks((prev) => prev.filter((task) => task.id !== id));
+
     try {
       await TaskServices.deleteTask({ id });
-      setTasks((prev) => prev.filter((task) => task.id !== id));
-
       return true;
     } catch (err) {
+      setTasks(previousTasks);
       setError(err);
       return false;
-    } finally {
-      setLoading(false);
     }
   };
 
