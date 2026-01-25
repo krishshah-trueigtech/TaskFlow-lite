@@ -1,17 +1,45 @@
 import { useForm } from "react-hook-form";
-import { useTasks } from "../../hooks/useTasks.js";
+import { useEffect } from "react";
+import { useTaskContext } from "../../context/TaskContext";
+
 const TaskForm = () => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm();
 
+  const { createTask, updateTask, editingTask, closeModal } = useTaskContext();
   const today = new Date().toISOString().split("T")[0];
-  const { createTask } = useTasks();
+
+  useEffect(() => {
+    if (editingTask) {
+      reset(editingTask);
+    } else {
+      reset({
+        title: "",
+        priority: "",
+        dueDate: "",
+        assignee: "",
+      });
+    }
+  }, [editingTask, reset]);
 
   const onSubmit = async (data) => {
-    await createTask(data);
+    if (editingTask) {
+      await updateTask({
+        ...editingTask,
+        ...data,
+      });
+    } else {
+      await createTask({
+        ...data,
+        status: "to-do",
+        id: String(Date.now()),
+      });
+    }
+    closeModal();
   };
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -73,7 +101,9 @@ const TaskForm = () => {
           <span className="error">{errors.assignee.message}</span>
         )}
       </div>
-      <button type="submit">Add Task</button>
+      <button type="submit" className="submit-btn">
+        {editingTask ? "Update Task" : "Add Task"}
+      </button>
     </form>
   );
 };
