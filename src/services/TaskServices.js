@@ -1,8 +1,14 @@
 import axios from "axios";
 
-export const createTask = async ({ title, priority, dueDate, assignee }) => {
+export const createTask = async ({
+  id,
+  title,
+  priority,
+  dueDate,
+  assignee,
+}) => {
   const response = await axios.post("http://localhost:3000/tasks", {
-    id: Date.now(),
+    id: id,
     title: title,
     status: "to-do",
     priority: priority,
