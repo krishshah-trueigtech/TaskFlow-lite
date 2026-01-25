@@ -1,6 +1,6 @@
 import "./TaskCard.css";
 import { useTaskContext } from "../context/TaskContext";
-
+import { memo } from "react";
 const TaskCard = (props) => {
   const { id, title, priority, status, dueDate, assignee } = props;
   const { updateTask, deleteTask, openEditModal } = useTaskContext();
@@ -104,4 +104,4 @@ const TaskCard = (props) => {
   );
 };
 
-export default TaskCard;
+export default memo(TaskCard);
