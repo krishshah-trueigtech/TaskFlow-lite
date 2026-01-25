@@ -11,7 +11,7 @@ const TaskForm = () => {
   } = useForm();
 
   const { createTask, updateTask, editingTask, closeModal } = useTaskContext();
-  const today = new Date().toLocaleDateString('en-CA');
+  const today = new Date().toLocaleDateString("en-CA");
 
   useEffect(() => {
     if (editingTask) {
@@ -51,8 +51,8 @@ const TaskForm = () => {
         />
         {errors.title && <span className="error">{errors.title.message}</span>}
       </div>
-      <div className="priority">
-        <label htmlFor="priority">Priority: </label>
+      <fieldset className="priority" style={{ border: "none", padding: 0 }}>
+        <legend style={{ fontWeight: "bold" }}>Priority:</legend>
         <label>
           <input
             type="radio"
@@ -80,7 +80,7 @@ const TaskForm = () => {
         {!errors.title && errors.priority && (
           <span className="error">{errors.priority.message}</span>
         )}
-      </div>
+      </fieldset>
       <div className="dueDate">
         <label htmlFor="dueDate">Due Date</label>
         <input
