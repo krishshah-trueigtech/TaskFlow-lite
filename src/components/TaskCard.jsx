@@ -1,8 +1,9 @@
-import { useTasks } from "../hooks/useTasks";
 import "./TaskCard.css";
+import { useTaskContext } from "../context/TaskContext";
 
-const TaskCard = ({ id, title, priority, status, dueDate, assignee }) => {
-  const { updateTask, deleteTask } = useTasks();
+const TaskCard = (props) => {
+  const { id, title, priority, status, dueDate, assignee } = props;
+  const { updateTask, deleteTask, openEditModal } = useTaskContext();
 
   const getPriorityColor = (p) => {
     if (p === "High") return "red";
@@ -11,18 +12,11 @@ const TaskCard = ({ id, title, priority, status, dueDate, assignee }) => {
   };
 
   const handleStatusChange = async (newStatus) => {
-    await updateTask({
-      id,
-      title,
-      priority,
-      dueDate,
-      assignee,
-      status: newStatus,
-    });
+    await updateTask({ ...props, status: newStatus });
   };
 
   const handleDelete = async () => {
-    if (window.confirm("Are you sure you want to delete this task?")) {
+    if (window.confirm("Delete this task?")) {
       await deleteTask(id);
     }
   };
@@ -39,23 +33,36 @@ const TaskCard = ({ id, title, priority, status, dueDate, assignee }) => {
         >
           {priority}
         </span>
-        <button
-          onClick={handleDelete}
-          className="delete-btn"
-          title="Delete Task"
-        >
-          &times;
-        </button>
+        <div className="header-actions">
+          <button
+            onClick={() => openEditModal(props)}
+            className="edit-btn"
+            style={{
+              marginRight: "5px",
+              background: "none",
+              border: "none",
+              cursor: "pointer",
+            }}
+          >
+            ✏️
+          </button>
+          <button
+            onClick={handleDelete}
+            className="delete-btn"
+            title="Delete Task"
+          >
+            &times;
+          </button>
+        </div>
       </div>
 
       <h3>{title}</h3>
-
       <div className="card-details">
         <p>
-          <small> {dueDate}</small>
+          <small>{dueDate}</small>
         </p>
         <p>
-          <small> {assignee || "Unassigned"}</small>
+          <small>{assignee || "Unassigned"}</small>
         </p>
       </div>
 
@@ -68,7 +75,6 @@ const TaskCard = ({ id, title, priority, status, dueDate, assignee }) => {
             Start
           </button>
         )}
-
         {status === "in-progress" && (
           <>
             <button
@@ -85,7 +91,6 @@ const TaskCard = ({ id, title, priority, status, dueDate, assignee }) => {
             </button>
           </>
         )}
-
         {status === "done" && (
           <button
             onClick={() => handleStatusChange("in-progress")}

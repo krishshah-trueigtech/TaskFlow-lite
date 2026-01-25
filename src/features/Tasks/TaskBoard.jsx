@@ -1,15 +1,8 @@
-import { useEffect, useMemo } from "react";
-import { useTasks } from "../../hooks/useTasks";
+import { useMemo } from "react";
 import TaskCard from "../../components/TaskCard";
 import "./TaskBoard.css";
 
-const TaskBoard = () => {
-  const { tasks, fetchTasks, loading, error } = useTasks();
-
-  useEffect(() => {
-    fetchTasks();
-  }, []);
-
+const TaskBoard = ({ tasks, loading, error }) => {
   const columnTasks = useMemo(() => {
     return {
       todo: tasks.filter((task) => task.status === "to-do"),
