@@ -11,9 +11,8 @@ export const useTasks = () => {
     try {
       const response = await TaskServices.fetchTasks();
       setTasks(response);
-      return response;
     } catch (err) {
-      setError(err);
+      setError(err.message || "Something went wrong");
     } finally {
       setLoading(false);
     }
@@ -25,10 +24,8 @@ export const useTasks = () => {
     try {
       const newTask = await TaskServices.createTask(taskData);
       setTasks((prev) => [...prev, newTask]);
-      return true;
     } catch (err) {
-      setError(err);
-      return false;
+      setError(err.message || "Something went wrong");
     } finally {
       setLoading(false);
     }

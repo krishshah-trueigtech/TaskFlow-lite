@@ -3,38 +3,36 @@ import axios from "axios";
 const API_URL = import.meta.env.VITE_API_URL_TASKS;
 
 export const createTask = async (taskData) => {
-  const response = await axios.post(API_URL, taskData);
-  if (response.status !== 201) throw Error("Failed to create task");
-  return response.data;
+  try {
+    const response = await axios.post(API_URL, taskData);
+    return response.data;
+  } catch (error) {
+    throw error.message;
+  }
 };
 export const fetchTasks = async () => {
-  const response = await axios.get(API_URL);
-  if (response.status !== 200) throw Error("Failed to fetch tasks");
-  return response.data;
+  try {
+    const response = await axios.get(API_URL);
+    return response.data;
+  } catch (error) {
+    throw error.message;
+  }
 };
 
-export const updateTask = async ({
-  id,
-  title,
-  priority,
-  status,
-  dueDate,
-  assignee,
-}) => {
-  const response = await axios.patch(`${API_URL}/${id}`, {
-    title: title,
-    status: status,
-    priority: priority,
-    dueDate: dueDate,
-    assignee: assignee,
-  });
-  if (response.status !== 200) throw Error("Failed to update task");
-
-  return response.data;
+export const updateTask = async ({ id, ...data }) => {
+  try {
+    const response = await axios.patch(`${API_URL}/${id}`, data);
+    return response.data;
+  } catch (error) {
+    throw error.message;
+  }
 };
 
 export const deleteTask = async ({ id }) => {
-  const response = await axios.delete(`${API_URL}/${id}`);
-  if (response.status !== 200) throw Error("Failed to Delete task");
-  return response.status;
+  try {
+    const response = await axios.delete(`${API_URL}/${id}`);
+    return response.status;
+  } catch (error) {
+    throw error.message;
+  }
 };
