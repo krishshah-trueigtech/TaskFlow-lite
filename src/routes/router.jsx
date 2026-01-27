@@ -8,11 +8,19 @@ import TaskForm from "../features/Tasks/TaskForm.jsx";
 import { useTaskFilter } from "../hooks/useTaskFilter.js";
 import { useAuth } from "../context/authContext.jsx";
 import { useDebounce } from "../hooks/useDebounce.js";
+import Modal from "../components/Modal.jsx";
 
 const DashboardContent = () => {
   const { logout, user } = useAuth();
-  const { tasks, loading, error, isModalOpen, openCreateModal } =
-    useTaskContext();
+  const {
+    tasks,
+    loading,
+    error,
+    isModalOpen,
+    closeModal,
+    editingTask,
+    openCreateModal,
+  } = useTaskContext();
   const [searchTerm, setSearchTerm] = useState("");
   const [priorityFilter, setPriorityFilter] = useState("All");
 
@@ -75,21 +83,13 @@ const DashboardContent = () => {
         <button onClick={openCreateModal}>+ New Task</button>
       </div>
 
-      {isModalOpen && (
-        <div style={{ padding: "0 20px", marginBottom: "20px" }}>
-          <div
-            style={{
-              background: "#f9f9f9",
-              padding: "20px",
-              borderRadius: "8px",
-              border: "1px solid #ddd",
-              color: "#333",
-            }}
-          >
-            <TaskForm />
-          </div>
-        </div>
-      )}
+      <Modal
+        isOpen={isModalOpen}
+        onClose={closeModal}
+        title={editingTask ? "Edit Task" : "Create New Task"}
+      >
+        <TaskForm />
+      </Modal>
 
       <TaskBoard tasks={filteredTasks} loading={loading} error={error} />
     </div>

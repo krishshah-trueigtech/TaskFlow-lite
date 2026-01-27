@@ -11,7 +11,7 @@
     {
       "id": "1",
       "title": "Setup Project",
-      "status": "done",
+      "status": "in-progress",
       "priority": "High",
       "dueDate": "2026-02-01",
       "assignee": "admin"
@@ -30,7 +30,7 @@
       "priority": "Low",
       "dueDate": "2222-02-22",
       "assignee": "asdf",
-      "status": "in-progress"
+      "status": "to-do"
     }
   ]
 }
