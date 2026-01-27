@@ -11,10 +11,18 @@
     {
       "id": "1",
       "title": "Setup Project",
-      "status": "in-progress",
-      "priority": "high",
+      "status": "done",
+      "priority": "High",
       "dueDate": "2026-02-01",
       "assignee": "admin"
+    },
+    {
+      "id": "1769369058553",
+      "title": "Kanban Board",
+      "priority": "Medium",
+      "dueDate": "2026-02-22",
+      "assignee": "admin",
+      "status": "in-progress"
     }
   ]
 }
