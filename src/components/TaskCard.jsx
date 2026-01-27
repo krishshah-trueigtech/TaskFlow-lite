@@ -2,7 +2,13 @@ import "./TaskCard.css";
 import { useTaskContext } from "../context/TaskContext";
 import { memo } from "react";
 const TaskCard = (props) => {
-  const { id, title, priority, status, dueDate, assignee } = props;
+  const {
+    id,
+    title,
+    priority = "Low",
+    dueDate,
+    assignee = "Unassigned",
+  } = props;
   const { updateTask, deleteTask, openEditModal } = useTaskContext();
 
   const getPriorityColor = (p) => {
