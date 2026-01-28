@@ -3,10 +3,10 @@ import { useTaskContext } from "../context/TaskContext";
 import { memo } from "react";
 const TaskCard = (props) => {
   const {
-    id,
-    title,
+    id = "-",
+    title = "n/a",
     priority = "Low",
-    dueDate,
+    dueDate = "-",
     assignee = "Unassigned",
   } = props;
   const { updateTask, deleteTask, openEditModal } = useTaskContext();

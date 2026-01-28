@@ -103,11 +103,11 @@ const TaskColumn = ({ title, tasks = [], status, isLoading }) => {
               </>
             ) : (
               <>
-                {tasks.length === 0 && !snapshot.isDraggingOver && (
+                {tasks?.length === 0 && !snapshot?.isDraggingOver && (
                   <p className="empty-msg">No tasks</p>
                 )}
 
-                {tasks.map((task, index) => (
+                {tasks?.map((task, index) => (
                   <Draggable key={task.id} draggableId={task.id} index={index}>
                     {(provided, snapshot) => (
                       <div
