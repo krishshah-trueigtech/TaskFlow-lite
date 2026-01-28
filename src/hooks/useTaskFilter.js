@@ -5,7 +5,6 @@ export const useTaskFilter = (tasks, searchTerm, priorityFilter) => {
     return tasks.filter((task) => {
       const matchesSearch = task?.title
         ?.toLowerCase()
-
         .includes(searchTerm?.toLowerCase());
 
       const matchesPriority =
