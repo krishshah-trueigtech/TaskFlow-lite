@@ -1,8 +1,8 @@
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../../context/authContext.jsx";
 import loginUser from "../../services/authService.js";
-
+import {useDispatch } from 'react-redux';
+import {login} from './authSlice.js'
 const LoginForm = () => {
   const {
     register,
@@ -12,11 +12,11 @@ const LoginForm = () => {
   } = useForm();
 
   const navigate = useNavigate();
-  const { login } = useAuth();
+  const dispatch = useDispatch();
   const onSubmit = async (data) => {
     try {
       const user = await loginUser(data);
-      login(user);
+      dispatch(login(user));
       navigate("/dashboard");
     } catch {
       setError({ message: "Invalid email or password" });

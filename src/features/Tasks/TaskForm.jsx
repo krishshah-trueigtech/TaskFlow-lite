@@ -1,8 +1,12 @@
 import { useForm } from "react-hook-form";
 import { useEffect } from "react";
-import { useTaskContext } from "../../context/TaskContext";
+import {useSelector, useDispatch} from 'react-redux';
+import {createTask, closeModal, updateTask} from './taskSlice'
+
 
 const TaskForm = () => {
+  const dispatch = useDispatch();
+  const editingTask = useSelector((state) => state.tasks.editingTask);
   const {
     register,
     handleSubmit,
@@ -10,7 +14,6 @@ const TaskForm = () => {
     formState: { errors },
   } = useForm();
 
-  const { createTask, updateTask, editingTask, closeModal } = useTaskContext();
   const today = new Date().toLocaleDateString("en-CA");
 
   useEffect(() => {
@@ -28,18 +31,18 @@ const TaskForm = () => {
 
   const onSubmit = async (data) => {
     if (editingTask) {
-      await updateTask({
+      await dispatch(updateTask({
         ...editingTask,
         ...data,
-      });
+      }));
     } else {
-      await createTask({
+      await dispatch(createTask({
         ...data,
         status: "to-do",
         id: String(Date.now()),
-      });
+      }));
     }
-    closeModal();
+    dispatch(closeModal());
   };
   return (
     <form onSubmit={handleSubmit(onSubmit)}>

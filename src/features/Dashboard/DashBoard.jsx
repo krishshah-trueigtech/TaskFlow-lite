@@ -1,28 +1,41 @@
-import { useState } from "react";
-import { TaskProvider, useTaskContext } from "../../context/TaskContext";
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchTasks, openModal, closeModal } from "../Tasks/taskSlice";
+import { logout } from "../auth/authSlice.js";
 import TaskBoard from "../Tasks/TaskBoard.jsx";
 import TaskForm from "../Tasks/TaskForm.jsx";
 import { useTaskFilter } from "../../hooks/useTaskFilter.js";
-import { useAuth } from "../../context/authContext.jsx";
 import { useDebounce } from "../../hooks/useDebounce.js";
 import Modal from "../../components/Modal.jsx";
+import { useNavigate } from "react-router-dom";
 
 const DashboardContent = () => {
-  const { logout, user } = useAuth();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const user = useSelector((state) => state.auth.user);
   const {
-    tasks,
+    items: tasks,
     loading,
     error,
     isModalOpen,
-    closeModal,
     editingTask,
-    openCreateModal,
-  } = useTaskContext();
+  } = useSelector((state) => state.tasks);
   const [searchTerm, setSearchTerm] = useState("");
   const [priorityFilter, setPriorityFilter] = useState("All");
 
+  useEffect(() => {
+    dispatch(fetchTasks());
+  }, [dispatch]);
+
   const debouncedSearch = useDebounce(searchTerm, 300);
   const filteredTasks = useTaskFilter(tasks, debouncedSearch, priorityFilter);
+
+  const handleLogout = () => {
+    dispatch(logout());
+    navigate("/login");
+  };
+  const handleOpenCreate = () => dispatch(openModal(null));
+  const handleCloseModal = () => dispatch(closeModal());
 
   return (
     <div className="dashboard-container">
@@ -42,7 +55,7 @@ const DashboardContent = () => {
           <p>Welcome, {user?.email}</p>
         </div>
         <button
-          onClick={logout}
+          onClick={handleLogout}
           style={{ background: "#ff4d4f", color: "white" }}
         >
           Logout
@@ -77,12 +90,12 @@ const DashboardContent = () => {
           <option value="Low">Low</option>
         </select>
 
-        <button onClick={openCreateModal}>+ New Task</button>
+        <button onClick={handleOpenCreate}>+ New Task</button>
       </div>
 
       <Modal
         isOpen={isModalOpen}
-        onClose={closeModal}
+        onClose={handleCloseModal}
         title={editingTask ? "Edit Task" : "Create New Task"}
       >
         <TaskForm />
@@ -94,9 +107,5 @@ const DashboardContent = () => {
 };
 
 export const Dashboard = () => {
-  return (
-    <TaskProvider>
-      <DashboardContent />
-    </TaskProvider>
-  );
+  return <DashboardContent />;
 };

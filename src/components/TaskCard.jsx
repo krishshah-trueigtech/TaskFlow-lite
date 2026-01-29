@@ -1,7 +1,10 @@
 import "./TaskCard.css";
-import { useTaskContext } from "../context/TaskContext";
 import { memo } from "react";
+import { useDispatch } from "react-redux";
+import { updateTask, deleteTask, openModal } from '../features/Tasks/taskSlice';
+
 const TaskCard = (props) => {
+  const dispatch = useDispatch();
   const {
     id = "-",
     title = "n/a",
@@ -9,7 +12,6 @@ const TaskCard = (props) => {
     dueDate = "-",
     assignee = "Unassigned",
   } = props;
-  const { updateTask, deleteTask, openEditModal } = useTaskContext();
 
   const getPriorityColor = (p) => {
     if (p === "High") return "red";
@@ -18,13 +20,23 @@ const TaskCard = (props) => {
   };
 
   const handleStatusChange = async (newStatus) => {
-    await updateTask({ ...props, status: newStatus });
+    dispatch(updateTask({ id, title, priority, dueDate, assignee, status: newStatus }));
   };
 
   const handleDelete = async () => {
     if (window.confirm("Delete this task?")) {
-      await deleteTask(id);
+      dispatch(deleteTask(id));
     }
+  };
+
+  const handleEdit = async () => {
+    dispatch(openModal({
+      id,
+      title,
+      priority,
+      dueDate,
+      assignee
+    }));
   };
 
   return (
@@ -41,7 +53,7 @@ const TaskCard = (props) => {
         </span>
         <div className="header-actions">
           <button
-            onClick={() => openEditModal(props)}
+            onClick={handleEdit}
             className="edit-btn"
             style={{
               marginRight: "5px",
