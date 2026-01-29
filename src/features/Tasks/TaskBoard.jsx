@@ -2,11 +2,8 @@ import { useMemo } from "react";
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 import TaskCard from "../../components/TaskCard";
 import "./TaskBoard.css";
-import {useDispatch} from 'react-redux';
-import { updateTask } from './taskSlice';
 
 const TaskBoard = ({ tasks, loading, error }) => {
-  const dispatch = useDispatch();
   const columnTasks = useMemo(() => {
     const safeTasks = tasks || [];
     return {
@@ -29,7 +26,7 @@ const TaskBoard = ({ tasks, loading, error }) => {
     }
 
     if (destination.droppableId !== source.droppableId) {
-      dispatch(updateTask({ id: draggableId, status: destination.droppableId }));
+      updateTask({ id: draggableId, status: destination.droppableId });
     }
   };
 

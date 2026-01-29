@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchTasks, openModal, closeModal } from "../Tasks/taskSlice";
+import {  openModal, closeModal } from "../Tasks/taskSlice";
 import { logout } from "../auth/authSlice.js";
 import TaskBoard from "../Tasks/TaskBoard.jsx";
 import TaskForm from "../Tasks/TaskForm.jsx";
@@ -8,24 +8,24 @@ import { useTaskFilter } from "../../hooks/useTaskFilter.js";
 import { useDebounce } from "../../hooks/useDebounce.js";
 import Modal from "../../components/Modal.jsx";
 import { useNavigate } from "react-router-dom";
+import {useGetTasksQuery} from "../api/apiSlice"
 
 const DashboardContent = () => {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const user = useSelector((state) => state.auth.user);
   const {
-    items: tasks,
-    loading,
-    error,
     isModalOpen,
     editingTask,
   } = useSelector((state) => state.tasks);
+  const { 
+    data: tasks = [], 
+    isLoading: loading, 
+    isError: error 
+  } = useGetTasksQuery();
   const [searchTerm, setSearchTerm] = useState("");
   const [priorityFilter, setPriorityFilter] = useState("All");
 
-  useEffect(() => {
-    dispatch(fetchTasks());
-  }, [dispatch]);
 
   const debouncedSearch = useDebounce(searchTerm, 300);
   const filteredTasks = useTaskFilter(tasks, debouncedSearch, priorityFilter);

@@ -1,8 +1,7 @@
 import "./TaskCard.css";
 import { memo } from "react";
 import { useDispatch } from "react-redux";
-import { updateTask, deleteTask, openModal } from '../features/Tasks/taskSlice';
-
+import { openModal } from '../features/Tasks/taskSlice';
 const TaskCard = (props) => {
   const dispatch = useDispatch();
   const {
@@ -20,24 +19,9 @@ const TaskCard = (props) => {
   };
 
   const handleStatusChange = async (newStatus) => {
-    dispatch(updateTask({ id, title, priority, dueDate, assignee, status: newStatus }));
+    updateTask({ id, title, priority, dueDate, assignee, status: newStatus });
   };
 
-  const handleDelete = async () => {
-    if (window.confirm("Delete this task?")) {
-      dispatch(deleteTask(id));
-    }
-  };
-
-  const handleEdit = async () => {
-    dispatch(openModal({
-      id,
-      title,
-      priority,
-      dueDate,
-      assignee
-    }));
-  };
 
   return (
     <div

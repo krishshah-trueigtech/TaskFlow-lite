@@ -1,10 +1,14 @@
 import { useForm } from "react-hook-form";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { createTask, closeModal, updateTask } from "./taskSlice";
+import { closeModal  } from "./taskSlice";
 import { v4 as uuidv4 } from "uuid";
+import { useUpdateTaskMutation, useAddTaskMutation } from "../api/apiSlice";
 
 const TaskForm = () => {
+  const [addTask, { isLoading: isAdding }] = useAddTaskMutation();
+  const [updateTask, { isLoading: isUpdating }] = useUpdateTaskMutation();
+
   const dispatch = useDispatch();
   const editingTask = useSelector((state) => state.tasks.editingTask);
   const {
@@ -31,20 +35,16 @@ const TaskForm = () => {
 
   const onSubmit = async (data) => {
     if (editingTask) {
-      await dispatch(
-        updateTask({
-          ...editingTask,
-          ...data,
-        }),
-      );
+      await updateTask({
+        ...editingTask,
+        ...data,
+      }).unwrap();
     } else {
-      await dispatch(
-        createTask({
-          ...data,
-          status: "to-do",
-          id: uuidv4(),
-        }),
-      );
+      await addTask({
+        ...data,
+        status: "to-do",
+        id: uuidv4(),
+      }).unwrap();
     }
     dispatch(closeModal());
   };
