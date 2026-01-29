@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { closeModal  } from "./taskSlice";
+import { closeModal } from "./taskSlice";
 import { v4 as uuidv4 } from "uuid";
 import { useUpdateTaskMutation, useAddTaskMutation } from "../api/apiSlice";
 
@@ -48,6 +48,9 @@ const TaskForm = () => {
     }
     dispatch(closeModal());
   };
+
+  const isLoading = isAdding || isUpdating;
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className="title">
@@ -114,7 +117,7 @@ const TaskForm = () => {
         )}
       </div>
       <button type="submit" className="submit-btn">
-        {editingTask ? "Update Task" : "Add Task"}
+        {isLoading ? "Saving..." : editingTask ? "Update Task" : "Add Task"}
       </button>
     </form>
   );
