@@ -1,8 +1,8 @@
 import { useForm } from "react-hook-form";
 import { useEffect } from "react";
-import {useSelector, useDispatch} from 'react-redux';
-import {createTask, closeModal, updateTask} from './taskSlice'
-
+import { useSelector, useDispatch } from "react-redux";
+import { createTask, closeModal, updateTask } from "./taskSlice";
+import { v4 as uuidv4 } from "uuid";
 
 const TaskForm = () => {
   const dispatch = useDispatch();
@@ -31,16 +31,20 @@ const TaskForm = () => {
 
   const onSubmit = async (data) => {
     if (editingTask) {
-      await dispatch(updateTask({
-        ...editingTask,
-        ...data,
-      }));
+      await dispatch(
+        updateTask({
+          ...editingTask,
+          ...data,
+        }),
+      );
     } else {
-      await dispatch(createTask({
-        ...data,
-        status: "to-do",
-        id: String(Date.now()),
-      }));
+      await dispatch(
+        createTask({
+          ...data,
+          status: "to-do",
+          id: uuidv4(),
+        }),
+      );
     }
     dispatch(closeModal());
   };
