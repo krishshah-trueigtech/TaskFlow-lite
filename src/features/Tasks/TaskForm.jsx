@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form";
 import { useEffect } from "react";
 import { useTaskContext } from "../../context/TaskContext";
+import { v4 as uuidv4 } from "uuid";
 
 const TaskForm = () => {
   const {
@@ -36,7 +37,7 @@ const TaskForm = () => {
       await createTask({
         ...data,
         status: "to-do",
-        id: String(Date.now()),
+        id: uuidv4(),
       });
     }
     closeModal();
