@@ -2,7 +2,7 @@ import { useMemo } from "react";
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 import TaskCard from "../../components/TaskCard";
 import "./TaskBoard.css";
-import { useUpdateTaskMutation } from "../features/api/apiSlice";
+import { useUpdateTaskMutation } from "../api/apiSlice";
 const TaskBoard = ({ tasks, loading, error }) => {
   const [updateTask] = useUpdateTaskMutation();
 
