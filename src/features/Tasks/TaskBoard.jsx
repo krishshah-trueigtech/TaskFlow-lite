@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, memo } from "react";
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 import TaskCard from "../../components/TaskCard";
 import "./TaskBoard.css";
@@ -74,7 +74,7 @@ const SkeletonCard = () => {
   );
 };
 
-const TaskColumn = ({ title, tasks = [], status, isLoading }) => {
+const TaskColumn = memo(({ title, tasks = [], status, isLoading }) => {
   return (
     <div className="column">
       <h3>
@@ -133,6 +133,6 @@ const TaskColumn = ({ title, tasks = [], status, isLoading }) => {
       </Droppable>
     </div>
   );
-};
+});
 
-export default TaskBoard;
+export default memo(TaskBoard);
