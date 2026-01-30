@@ -5,7 +5,7 @@ const API_URL = import.meta.env.VITE_API_URL_TASKS;
 export const apiSlice = createApi({
   reducerPath: "api",
   baseQuery: fetchBaseQuery({ baseUrl: API_URL }),
-  tagTypes: ["tasks"],
+  tagTypes: ["Tasks"],
   endpoints: (builder) => ({
     getTasks: builder.query({
       query: () => "",
@@ -26,7 +26,21 @@ export const apiSlice = createApi({
         method: "PATCH",
         body: patch,
       }),
-      invalidatesTags: ["Tasks"],
+      async onQueryStarted({ id, ...patch }, { dispatch, queryFulfilled }) {
+        const patchResult = dispatch(
+          apiSlice.util.updateQueryData("getTasks", undefined, (draftTasks) => {
+            const task = draftTasks.find((t) => t.id === id);
+            if (task) {
+              Object.assign(task, patch);
+            }
+          }),
+        );
+        try {
+          await queryFulfilled;
+        } catch {
+          patchResult.undo();
+        }
+      },
     }),
     deleteTask: builder.mutation({
       query: (id) => ({
