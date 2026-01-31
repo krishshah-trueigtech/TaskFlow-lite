@@ -1,8 +1,8 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 
-import LoginForm from "../features/auth/LoginForm.jsx";
+import LoginForm from "../components/Authentication/components/LoginForm/component/LoginForm";
 import ProtectedRoute from "../components/ProtectedRoute.jsx";
-import { Dashboard } from "../features/Dashboard/DashBoard.jsx";
+import { Dashboard } from "../components/Dashboard/DashBoard.jsx";
 
 const AppRoutes = () => {
   return (

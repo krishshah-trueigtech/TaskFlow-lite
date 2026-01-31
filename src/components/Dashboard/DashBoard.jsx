@@ -1,12 +1,12 @@
 import { useState } from "react";
-import { TaskProvider, useTaskContext } from "../../context/TaskContext";
-import TaskBoard from "../Tasks/TaskBoard.jsx";
-import TaskForm from "../Tasks/TaskForm.jsx";
-import { useTaskFilter } from "../../hooks/useTaskFilter.js";
-import { useAuth } from "../../context/authContext.jsx";
-import { useDebounce } from "../../hooks/useDebounce.js";
-import Modal from "../../components/Modal.jsx";
-
+import { TaskProvider, useTaskContext } from "../Tasks/context/TaskContext.jsx";
+import TaskBoard from "../Tasks/components/TaskBoard/components/TaskBoard.jsx";
+import TaskForm from "../Tasks/components/TaskForm/components/TaskForm.jsx";
+import { useTaskFilter } from "../Tasks/hooks/useTaskFilter.js";
+import { useAuth } from "../Authentication/context/authContext.jsx";
+import { useDebounce } from "../../common/hooks/useDebounce.js";
+import Modal from "../../common/Modal/Modal.jsx";
+import LoginForm from '../Authentication/components/LoginForm/component/LoginForm'
 const DashboardContent = () => {
   const { logout, user } = useAuth();
   const {
