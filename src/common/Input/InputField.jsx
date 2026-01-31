@@ -17,11 +17,12 @@ export default function InputField({
         name={name}
         placeholder={placeholder}
         rules={rules}
-        render={({ field: { onChange, onBlur, name, ref } }) => (
+        render={({ field: { onChange, onBlur, value, name, ref } }) => (
           <input
             ref={ref}
             onChange={onChange}
             onBlur={onBlur}
+            value={value || ""}
             type={type}
             name={name}
             id={name}
