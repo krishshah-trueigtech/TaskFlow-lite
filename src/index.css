@@ -1,16 +1,10 @@
-:root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+@import "tailwindcss";
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@theme {
+  --color-formInputFocus: #e4a02d;
+  --color-formInputBorder: #ffffff61;
+  --color-formInputbutton: #420356;
+  --color-switchText: #de9700;
 }
 
 a {
@@ -23,11 +17,10 @@ a:hover {
 }
 
 body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+  @apply m-0 min-w-xs min-h-screen bg-[#200B33] text-[#fff] leading-1.5 font-normal font-['poppins'];
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 h1 {
@@ -36,7 +29,7 @@ h1 {
 }
 
 button {
-  border-radius: 8px;
+  border-radius: 12px;
   border: 1px solid transparent;
   padding: 0.6em 1.2em;
   font-size: 1em;
@@ -65,4 +58,90 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
+}
+
+.navbar {
+  @apply bg-[#2C0E48] text-[#ffff] min-w-screen min-h-11;
+}
+
+.navbar-container {
+  /* display: flex; */
+  /* width: 100%; */
+  @apply flex items-center justify-between gap-1 p-3 min-h-12;
+}
+span .navbar-container {
+  @apply flex
+  justify-start;
+}
+.navbar-buttons {
+  @apply flex gap-1;
+}
+.form-input:focus-visible {
+  outline: none !important;
+}
+.form-input {
+  @apply border rounded-xs text-white bg-[#200B33] border-formInputBorder min-w-xs focus:border-formInputFocus;
+}
+.form-container {
+  @apply flex m-auto justify-between max-h-100 p-0;
+}
+img {
+  @apply max-h-100;
+}
+
+.form-button {
+  @apply bg-formInputbutton;
+}
+.form {
+  @apply flex flex-col items-center justify-center gap-4 p-4 max-w-md;
+}
+.form-input-fields {
+  @apply flex flex-col gap-2;
+}
+
+.validation-errors {
+  @apply text-red-800 text-sm;
+}
+.line {
+  @apply border-t-1 min-w-24 max-h-0;
+}
+.line-text-container {
+  @apply flex flex-row p-2 gap-2;
+}
+
+.form .form-button {
+  @apply min-w-xs;
+}
+.form-checkbox {
+  @apply max-w-xs text-xs;
+}
+.form span {
+  @apply text-xs;
+}
+.form .switch-text {
+  @apply text-switchText;
+}
+.nav-text {
+  @apply flex flex-col m-2 gap-4;
+}
+.form-details {
+  @apply grid  grid-cols-2;
+}
+.details-container {
+  @apply flex m-auto justify-between p-4  items-center content-center;
+}
+
+.details-container .form-input-fields {
+  @apply flex flex-col p-3;
+}
+
+.details-container img {
+  @apply max-h-20 max-w-20;
+}
+.form-select {
+  @apply flex flex-col p-3;
+}
+
+.profile-info {
+  @apply flex flex-col items-center gap-2;
 }
