@@ -3,13 +3,14 @@ import { getTaskFormFields } from "../constants/taskFormFields";
 import InputField from "../../../../../common/Input/InputField";
 
 const TaskForm = () => {
-  const { register, control, handleSubmit, errors, today, editingTask } =
+  const { control, handleSubmit, errors, today, editingTask } =
     useTaskForm();
 
   const formFields = getTaskFormFields(today);
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit}
+    className="form">
       {formFields.map((field) => (
         <div key={field.name}>
           <InputField
@@ -19,6 +20,7 @@ const TaskForm = () => {
             placeholder={field.placeholder}
             type={field.type}
             rules={field.rules}
+            options={field.options}
           />
 
           {errors[field.name] && (
@@ -28,27 +30,6 @@ const TaskForm = () => {
           )}
         </div>
       ))}
-
-      <fieldset className="priority" style={{ border: "none", padding: 0 }}>
-        <legend style={{ fontWeight: "bold" }}>Priority:</legend>
-        {["High", "Medium", "Low"].map((p) => (
-          <label key={p}>
-            <input
-              type="radio"
-              value={p}
-              {...register("priority", {
-                required: "Please select a priority",
-              })}
-            />
-            {p}
-          </label>
-        ))}
-        {errors.priority && (
-          <span className="error" style={{ color: "red", fontSize: "0.8rem" }}>
-            {errors.priority.message}
-          </span>
-        )}
-      </fieldset>
 
       <button type="submit" className="submit-btn">
         {editingTask ? "Update Task" : "Add Task"}

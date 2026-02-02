@@ -3,9 +3,10 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import loginFormFields from "../constants/loginFormField";
 import { useAuth } from "../../../context/authContext.jsx";
-import loginUser from "../../../../../services/authService.js";
+import { loginUser } from "../../../../../services/authService.js";
+import image from "../../../../../assets/image.webp";
 
-const LoginForm = () => {
+const LoginForm = ({ onClose }) => {
   const {
     control,
     handleSubmit,
@@ -17,41 +18,51 @@ const LoginForm = () => {
     try {
       const user = await loginUser(data);
       login(user);
+      if (onClose) onClose();
       navigate("/dashboard");
     } catch {
       throw new Error({ message: "Invalid email or password" });
     }
   };
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-      style={{ maxWidth: 300, margin: "auto" }}
-    >
-      <h2>Login</h2>
+    <div className="form-container">
+      <div>
+        <img src={image} className="form-image" />
+      </div>
 
-      {loginFormFields.map((fields) => (
-        <div key={fields.name}>
-          <InputField
-            control={control}
-            name={fields.name}
-            label={fields.label}
-            placeholder={fields.placeholder}
-            type={fields.type}
-            rules={fields.rules}
-          />
+      <form onSubmit={handleSubmit(onSubmit)} className="form">
+        <h2>Login</h2>
+        <div className="line-text-container">
+          <div className="line"></div>
+          <p className="line-text">Login with email</p>
 
-          {errors[fields.name] && (
-            <span style={{ color: "red", fontSize: "0.8rem" }}>
-              {errors[fields.name]?.message?.toString()}
-            </span>
-          )}
+          <div className="line"></div>
         </div>
-      ))}
+        {loginFormFields.map((fields) => (
+          <div key={fields.name}>
+            <InputField
+              control={control}
+              name={fields.name}
+              label={fields.label}
+              placeholder={fields.placeholder}
+              type={fields.type}
+              rules={fields.rules}
+            />
 
-      <button type="submit" style={{ marginTop: 10 }}>
-        Sign In
-      </button>
-    </form>
+            {errors[fields.name] && (
+              <span className="validation-errors">
+                {errors[fields.name]?.message?.toString()}
+              </span>
+            )}
+          </div>
+        ))}
+        <span className="text-xs">Forgot Your Password?</span>
+        <button type="submit" className="form-button">
+          Log In
+        </button>
+        <div><span>Don’t have an account??</span><span className="switch-text"> Sign UP</span></div>
+      </form>
+    </div>
   );
 };
 

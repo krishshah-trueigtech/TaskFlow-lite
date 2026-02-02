@@ -3,12 +3,10 @@ import { TaskProvider, useTaskContext } from "../Tasks/context/TaskContext.jsx";
 import TaskBoard from "../Tasks/components/TaskBoard/components/TaskBoard.jsx";
 import TaskForm from "../Tasks/components/TaskForm/components/TaskForm.jsx";
 import { useTaskFilter } from "../Tasks/hooks/useTaskFilter.js";
-import { useAuth } from "../Authentication/context/authContext.jsx";
 import { useDebounce } from "../../common/hooks/useDebounce.js";
 import Modal from "../../common/Modal/Modal.jsx";
-import LoginForm from '../Authentication/components/LoginForm/component/LoginForm'
+
 const DashboardContent = () => {
-  const { logout, user } = useAuth();
   const {
     tasks,
     loading,
@@ -26,29 +24,6 @@ const DashboardContent = () => {
 
   return (
     <div className="dashboard-container">
-      <header
-        style={{
-          padding: "20px",
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          background: "#fff",
-          borderBottom: "1px solid #ddd",
-          color: "#333",
-        }}
-      >
-        <div>
-          <h2>TaskFlow Lite</h2>
-          <p>Welcome, {user?.email}</p>
-        </div>
-        <button
-          onClick={logout}
-          style={{ background: "#ff4d4f", color: "white" }}
-        >
-          Logout
-        </button>
-      </header>
-
       <div
         className="controls"
         style={{

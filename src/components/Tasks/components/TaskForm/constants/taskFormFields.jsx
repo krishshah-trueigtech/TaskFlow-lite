@@ -9,6 +9,13 @@ export const getTaskFormFields = (today) => [
     },
   },
   {
+    name: "priority",
+    label: "Priority",
+    type: "radio",
+    options: ["High", "Medium", "Low"],
+    rules: { required: "Please select a priority" },
+  },
+  {
     name: "dueDate",
     label: "Due Date",
     placeholder: "Enter Date",

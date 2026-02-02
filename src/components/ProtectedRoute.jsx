@@ -3,6 +3,6 @@ import { useAuth } from "./Authentication/context/authContext.jsx";
 const ProtectedRoute = () => {
   const { user } = useAuth();
 
-  return user ? <Outlet /> : <Navigate to="/login" />;
+  return user ? <Outlet /> : <Navigate to="/" />;
 };
 export default ProtectedRoute;
