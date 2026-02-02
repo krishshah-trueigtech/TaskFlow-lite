@@ -1,3 +1,5 @@
+@import "tailwindcss";
+
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -13,20 +15,18 @@
 }
 
 .modal-content {
-  background: white;
-  padding: 20px;
+  background: #200b33;
   border-radius: 8px;
-  width: 90%;
-  max-width: 500px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
   position: relative;
   animation: slideDown 0.3s ease-out;
-  color: #333;
+
+  @apply max-w-[100vw] max-h-[100vh];
 }
 
 .modal-header {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   margin-bottom: 20px;
   border-bottom: 1px solid #eee;
