@@ -12,7 +12,7 @@ const loginFormFields = [
   {
     name: "password",
     label: "Password",
-    placeholder: "Enter password",
+    placeholder: "-----------",
     type: "password",
     rules: {
       required: "Password is required",
