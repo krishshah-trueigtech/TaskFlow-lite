@@ -6,9 +6,9 @@ import { useAuth } from "../../../context/authContext.jsx";
 import { useUpdateUser } from "../hooks/useUpdateUser";
 import profile from "../../../../../assets/profile.webp";
 
-const UserDetailForm = () => {
+const UserDetailForm = (onClose) => {
   const { user } = useAuth();
-  const { updateUser, loading, error } = useUpdateUser();
+  const { updateUser } = useUpdateUser();
 
   const {
     control,
@@ -20,11 +20,11 @@ const UserDetailForm = () => {
       username: user?.username || "",
       emailId: user?.email || "",
       phoneNumber: user?.phoneNumber || "",
-      gender: "",
-      dob: "",
-      address: "",
-      zipCode: "",
-      state: "",
+      gender: user?.gender || "",
+      dob: user?.dob ? new Date(user.dob).toISOString().split("T")[0] : "",
+      address: user?.address || "",
+      zipCode: user?.zipCode || "",
+      state: user?.state || "",
     },
   });
 
@@ -33,15 +33,17 @@ const UserDetailForm = () => {
     if (result.success) {
       alert("Profile updated successfully!");
     }
+    if (onClose) onClose();
   };
 
   return (
     <div className="details-container">
-      <form onSubmit={handleSubmit(onSubmit)}
-      className = "details-form" >
-        <div className = "profile-info">
-        <h2>Personal Information</h2>
-        <img src={profile}></img>
+      <form onSubmit={handleSubmit(onSubmit)} className="details-form">
+        <div className="profile-info">
+          <h2>Personal Information</h2>
+          <img className="profile-image" src={profile}></img>
+          <p>{user?.fullName}</p>
+          <p>User ID: {user?.id}</p>
         </div>
         <div className="form-details ">
           {userDetailFields.map((field) => (
@@ -63,7 +65,7 @@ const UserDetailForm = () => {
               )}
             </div>
           ))}
-          </div>
+        </div>
         <button
           type="submit"
           className="form-button"
