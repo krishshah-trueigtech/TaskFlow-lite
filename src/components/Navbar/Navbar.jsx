@@ -14,23 +14,30 @@ const Navbar = () => {
   const closeModal = () => setModalType(null);
 
   const handleLogout = () => {
-    closeModal();
-    logout();
-    navigate("/");
+    const confirmLogout = window.confirm("Are you sure you want to log out?");
+    if (confirmLogout) {
+      closeModal();
+      logout();
+      navigate("/");
+    }
   };
 
   const modalConfig = {
-    login: { title: "Login", component: <LoginForm onClose={closeModal} /> },
+    login: {
+      title: "Login",
+      component: <LoginForm onClose={closeModal} setModalType={setModalType} />,
+    },
     signup: {
       title: "Create Account",
-      component: <SignUpForm onClose={closeModal} />,
+      component: (
+        <SignUpForm onClose={closeModal} setModalType={setModalType} />
+      ),
     },
     userDetails: {
       title: "User Details",
       component: <UserDetailsForm onClose={closeModal} />,
     },
   };
-
   const currentModal = modalConfig[modalType];
 
   return (
