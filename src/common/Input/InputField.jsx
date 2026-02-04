@@ -12,14 +12,14 @@ export default function InputField({
 }) {
   if (type === "radio") {
     return (
-      <fieldset className="form-radio">
+      <fieldset>
         <legend>{label}</legend>
         <Controller
           control={control}
           name={name}
           rules={rules}
           render={({ field }) => (
-            <div>
+            <div className="form-radio">
               {options.map((optionValue) => (
                 <label key={optionValue}>
                   <input
@@ -90,7 +90,6 @@ export default function InputField({
       <Controller
         control={control}
         name={name}
-        placeholder={placeholder}
         rules={rules}
         render={({ field: { onChange, onBlur, value, name, ref } }) => (
           <input
@@ -102,6 +101,7 @@ export default function InputField({
             name={name}
             id={name}
             className="form-input"
+            placeholder={placeholder}
           />
         )}
       />
