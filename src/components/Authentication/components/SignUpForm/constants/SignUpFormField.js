@@ -1,5 +1,4 @@
 const SignUpFormFields = [
-  
   {
     name: "username",
     label: "User Name ",
@@ -7,7 +6,10 @@ const SignUpFormFields = [
     type: "text",
     rules: {
       required: "Please Enter your username",
-      minLength: {value: 3, message: "username should be atleast 3 characters"}
+      minLength: {
+        value: 3,
+        message: "username should be atleast 3 characters",
+      },
     },
   },
   {
@@ -36,7 +38,7 @@ const SignUpFormFields = [
   {
     name: "password",
     label: "Password",
-    placeholder: "Enter password",
+    placeholder: "-----------",
     type: "password",
     rules: {
       required: "Password is required",
@@ -45,7 +47,8 @@ const SignUpFormFields = [
   },
   {
     name: "ageConfirm",
-    label: "I confirm that I am 18 years or older and legally allowed to participate in online gaming.",
+    label:
+      "I confirm that I am 18 years or older and legally allowed to participate in online gaming.",
     type: "checkbox",
     rules: {
       required: "You must confirm your age to proceed",
