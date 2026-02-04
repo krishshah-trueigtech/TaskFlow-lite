@@ -38,7 +38,7 @@ const DashboardContent = () => {
           placeholder="Search tasks..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          style={{ padding: "8px", width: "300px" }}
+          className="form-input"
         />
 
         <select
