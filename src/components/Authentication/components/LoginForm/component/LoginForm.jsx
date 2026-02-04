@@ -6,7 +6,7 @@ import { useAuth } from "../../../context/authContext.jsx";
 import { loginUser } from "../../../../../services/authService.js";
 import image from "../../../../../assets/image.webp";
 
-const LoginForm = ({ onClose }) => {
+const LoginForm = ({ onClose, setModalType }) => {
   const {
     control,
     handleSubmit,
@@ -56,11 +56,17 @@ const LoginForm = ({ onClose }) => {
             )}
           </div>
         ))}
-        <span className="text-xs">Forgot Your Password?</span>
-        <button type="submit" className="form-button">
+        <a className="text-xs">Forgot Your Password?</a>
+        <button type="submit" className="form-buttons">
           Log In
         </button>
-        <div><span>Don’t have an account??</span><span className="switch-text"> Sign UP</span></div>
+        <div>
+          <span>Don’t have an account?</span>
+          <a className="switch-text" onClick={() => setModalType("signup")}>
+            {" "}
+            Sign UP
+          </a>
+        </div>
       </form>
     </div>
   );
