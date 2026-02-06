@@ -1,26 +1,32 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 @import "tailwindcss";
 
 @theme {
+  --font-poppins: "Poppins", sans-serif;
   --color-formInputFocus: #e4a02d;
-  --color-formInputBorder: #ffffff61;
+  --color-formInputBorder: rgba(255, 255, 255, 0.38);
   --color-formInputbutton: #420356;
   --color-switchText: #de9700;
+  --color-primaryColor: #200b33;
+  --color-primaryText: #fff;
+  --color-secondaryColor: #2c0e48;
+}
+
+* {
+  box-sizing: border-box;
 }
 
 a {
   font-weight: 500;
-  color: #646cff;
   text-decoration: inherit;
 }
 a:hover {
   color: #535bf2;
+  cursor: pointer;
 }
 
 body {
-  @apply m-0 min-w-xs min-h-screen bg-[#200B33] text-[#fff] leading-1.5 font-normal font-['poppins'];
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  @apply m-0 min-w-xs min-h-screen bg-primaryColor text-primaryText leading-3 font-normal font-['poppins'] max-w-full;
 }
 
 h1 {
@@ -60,88 +66,86 @@ button:focus-visible {
   }
 }
 
-.navbar {
-  @apply bg-[#2C0E48] text-[#ffff] min-w-screen min-h-11;
-}
-
-.navbar-container {
-  /* display: flex; */
-  /* width: 100%; */
-  @apply flex items-center justify-between gap-1 p-3 min-h-12;
-}
-span .navbar-container {
-  @apply flex
-  justify-start;
-}
-.navbar-buttons {
-  @apply flex gap-1;
-}
 .form-input:focus-visible {
   outline: none !important;
 }
 .form-input {
-  @apply border rounded-xs text-white bg-[#200B33] border-formInputBorder min-w-xs focus:border-formInputFocus;
+  @apply border rounded-md text-white bg-secondaryColor border-formInputBorder w-full   p-2 focus:border-formInputFocus focus:bg-primaryColor;
 }
 .form-container {
-  @apply flex m-auto justify-between max-h-100 p-0;
+  @apply flex mx-auto justify-between gap-3 p-0;
 }
-img {
-  @apply max-h-100;
+.form-image {
+  @apply max-w-md w-full  max-sm:hidden;
 }
 
-.form-button {
+button {
   @apply bg-formInputbutton;
 }
+
 .form {
-  @apply flex flex-col items-center justify-center gap-4 p-4 max-w-md;
+  @apply flex flex-col items-center justify-center gap-1 p-4 max-w-md w-full  overflow-auto;
 }
 .form-input-fields {
-  @apply flex flex-col gap-2;
+  @apply gap-2 w-full;
 }
 
 .validation-errors {
   @apply text-red-800 text-sm;
 }
 .line {
-  @apply border-t-1 min-w-24 max-h-0;
+  @apply border-t-1 min-w-24 max-h-0 max-sm:min-w-14;
 }
 .line-text-container {
-  @apply flex flex-row p-2 gap-2;
+  @apply flex flex-row p-2 gap-2 items-center w-max;
 }
 
-.form .form-button {
-  @apply min-w-xs;
+.form-buttons {
+  @apply max-w-sm  max-sm:min-w-max w-full mx-auto;
 }
 .form-checkbox {
   @apply max-w-xs text-xs;
 }
-.form span {
+span {
   @apply text-xs;
 }
-.form .switch-text {
-  @apply text-switchText;
+.switch-text {
+  @apply text-switchText cursor-pointer;
 }
-.nav-text {
-  @apply flex flex-col m-2 gap-4;
-}
+
 .form-details {
-  @apply grid  grid-cols-2;
+  @apply grid  grid-cols-2 gap-2;
 }
 .details-container {
   @apply flex m-auto justify-between p-4  items-center content-center;
 }
 
-.details-container .form-input-fields {
+.form-input-fields {
   @apply flex flex-col p-3;
 }
 
-.details-container img {
+.profile-image {
   @apply max-h-20 max-w-20;
 }
 .form-select {
-  @apply flex flex-col p-3;
+  @apply flex flex-col;
 }
 
 .profile-info {
-  @apply flex flex-col items-center gap-2;
+  @apply flex flex-col items-center gap-2 m-2;
+}
+.form-radio {
+  @apply mr-4 ml-4 mt-2;
+}
+
+.details-form {
+  @apply flex  flex-col items-center;
+}
+
+#ageConfirm {
+  @apply bg-primaryColor;
+}
+
+#dob {
+  @apply max-sm:max-w-[9.2rem];
 }

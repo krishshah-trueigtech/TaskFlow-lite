@@ -84,7 +84,7 @@ export default function InputField({
     );
   }
   return (
-    <div className="form-input-fields">
+    <>
       <label htmlFor={name}> {label} </label>
 
       <Controller
@@ -105,6 +105,6 @@ export default function InputField({
           />
         )}
       />
-    </div>
+    </>
   );
 }

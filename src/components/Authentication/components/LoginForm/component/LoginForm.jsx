@@ -26,8 +26,8 @@ const LoginForm = ({ onClose, setModalType }) => {
   };
   return (
     <div className="form-container">
-      <div>
-        <img src={image} className="form-image" />
+      <div className="form-image">
+        <img className="h-full object-fit " src={image} />
       </div>
 
       <form onSubmit={handleSubmit(onSubmit)} className="form">
@@ -39,7 +39,7 @@ const LoginForm = ({ onClose, setModalType }) => {
           <div className="line"></div>
         </div>
         {loginFormFields.map((fields) => (
-          <div key={fields.name}>
+          <div className="form-input-fields" key={fields.name}>
             <InputField
               control={control}
               name={fields.name}

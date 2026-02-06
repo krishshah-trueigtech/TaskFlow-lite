@@ -24,15 +24,7 @@ const DashboardContent = () => {
 
   return (
     <div className="dashboard-container">
-      <div
-        className="controls"
-        style={{
-          padding: "20px",
-          display: "flex",
-          gap: "15px",
-          alignItems: "center",
-        }}
-      >
+      <div className="flex p-4 gap-2 items-center ">
         <input
           type="text"
           placeholder="Search tasks..."
@@ -52,7 +44,7 @@ const DashboardContent = () => {
           <option value="Low">Low</option>
         </select>
 
-        <button onClick={openCreateModal}>+ New Task</button>
+        <button onClick={openCreateModal}> New Task</button>
       </div>
 
       <Modal

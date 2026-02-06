@@ -41,14 +41,14 @@ const Navbar = () => {
   const currentModal = modalConfig[modalType];
 
   return (
-    <nav className="navbar">
-      <div className="navbar-container">
-        <div className="nav-text">
+    <nav className="bg-secondaryColor text-primaryText min-w-full min-h-11">
+      <div className="flex items-center justify-between gap-1 p-3 min-h-12">
+        <div className="flex flex-col m-1 gap-2">
           <h2>TaskFlow-Lite</h2>
-          {user && <span>Hi, {user.email}</span>}
+          {user && <span className="flex justify-start">Hi, {user.email}</span>}
         </div>
 
-        <div className="navbar-buttons">
+        <div className="flex gap-1">
           {user ? (
             <>
               <button

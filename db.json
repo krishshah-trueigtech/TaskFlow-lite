@@ -4,21 +4,53 @@
       "username": "admin",
       "email": "admin@gmail.com",
       "password": "Admin@123",
-      "id": "fd06"
+      "id": "fd06",
+      "fullName": "Krish Shah",
+      "emailId": "admin@gmail.com",
+      "phoneNumber": "9301671789",
+      "gender": "Male",
+      "dob": "2004-06-19",
+      "address": "adsfd",
+      "zipCode": "456006",
+      "state": "Madhya Pradesh"
+    },
+    {
+      "id": "2be1",
+      "username": "Krish",
+      "email": "kshah@gmail.com",
+      "phoneNumber": "9301671789",
+      "password": "Admin@123",
+      "ageConfirm": true
+    },
+    {
+      "id": "5f1b",
+      "username": "Krish",
+      "email": "kshah@gmail.com",
+      "phoneNumber": "9301671789",
+      "password": "Admin@123",
+      "ageConfirm": true
+    },
+    {
+      "id": "2f67",
+      "username": "Krish",
+      "email": "admin1234@gmail.com",
+      "phoneNumber": "9301671789",
+      "password": "Admin@123",
+      "ageConfirm": true
     }
   ],
   "tasks": [
     {
       "id": "1",
       "title": "Setup Project",
-      "status": "in-progress",
+      "status": "done",
       "priority": "Low",
       "dueDate": "2026-02-01",
       "assignee": "admin"
     },
     {
       "title": "Mini project",
-      "status": "done",
+      "status": "in-progress",
       "priority": "High",
       "dueDate": "2222-02-22",
       "assignee": "Admin",
@@ -49,14 +81,6 @@
       "priority": "Medium",
       "dueDate": "2222-02-22",
       "assignee": "adsf",
-      "status": "to-do"
-    },
-    {
-      "id": "f906069a-35b7-42be-90b0-942d15184ca4",
-      "title": "adsfa",
-      "priority": "Medium",
-      "dueDate": "2221-02-22",
-      "assignee": "asdf",
       "status": "to-do"
     }
   ]

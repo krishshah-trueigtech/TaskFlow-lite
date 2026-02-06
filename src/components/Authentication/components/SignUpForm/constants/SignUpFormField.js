@@ -48,7 +48,7 @@ const SignUpFormFields = [
   {
     name: "ageConfirm",
     label:
-      "I confirm that I am 18 years or older and legally allowed to participate in online gaming.",
+      " I confirm that I am 18 years or older and legally allowed to participate in online gaming.",
     type: "checkbox",
     rules: {
       required: "You must confirm your age to proceed",

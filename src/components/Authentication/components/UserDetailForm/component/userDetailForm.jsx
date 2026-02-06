@@ -6,7 +6,7 @@ import { useAuth } from "../../../context/authContext.jsx";
 import { useUpdateUser } from "../hooks/useUpdateUser";
 import profile from "../../../../../assets/profile.webp";
 
-const UserDetailForm = (onClose) => {
+const UserDetailForm = ({ onClose }) => {
   const { user } = useAuth();
   const { updateUser } = useUpdateUser();
 
@@ -47,7 +47,7 @@ const UserDetailForm = (onClose) => {
         </div>
         <div className="form-details ">
           {userDetailFields.map((field) => (
-            <div key={field.name} style={{ marginBottom: "1rem" }}>
+            <div key={field.name} className="flex grid gap-2">
               <InputField
                 control={control}
                 name={field.name}
