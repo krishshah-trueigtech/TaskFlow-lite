@@ -26,7 +26,7 @@ a:hover {
 }
 
 body {
-  @apply m-0 min-w-xs min-h-screen bg-primaryColor text-primaryText leading-3 font-normal font-['poppins'] max-w-full;
+  @apply m-0 min-w-xs min-h-screen bg-primaryColor text-primaryText leading-4 font-normal font-['poppins'] max-w-full;
 }
 
 h1 {
@@ -35,13 +35,13 @@ h1 {
 }
 
 button {
+  @apply bg-formInputbutton;
   border-radius: 12px;
   border: 1px solid transparent;
   padding: 0.6em 1.2em;
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
   cursor: pointer;
   transition: border-color 0.25s;
 }
@@ -70,7 +70,7 @@ button:focus-visible {
   outline: none !important;
 }
 .form-input {
-  @apply border rounded-md text-white bg-secondaryColor border-formInputBorder w-full   p-2 focus:border-formInputFocus focus:bg-primaryColor;
+  @apply border rounded-xl text-white bg-secondaryColor border-formInputBorder w-full   p-2 focus:border-formInputFocus focus:bg-primaryColor;
 }
 .form-container {
   @apply flex mx-auto justify-between gap-3 p-0;
@@ -79,12 +79,8 @@ button:focus-visible {
   @apply max-w-md w-full  max-sm:hidden;
 }
 
-button {
-  @apply bg-formInputbutton;
-}
-
 .form {
-  @apply flex flex-col items-center justify-center gap-1 p-4 max-w-md w-full  overflow-auto;
+  @apply flex flex-col items-center justify-center gap-1 p-4 max-w-md w-full;
 }
 .form-input-fields {
   @apply gap-2 w-full;
@@ -110,11 +106,11 @@ span {
   @apply text-xs;
 }
 .switch-text {
-  @apply text-switchText cursor-pointer;
+  @apply text-switchText underline cursor-pointer;
 }
 
 .form-details {
-  @apply grid  grid-cols-2 gap-2;
+  @apply grid  grid-cols-2 gap-4;
 }
 .details-container {
   @apply flex m-auto justify-between p-4  items-center content-center;
