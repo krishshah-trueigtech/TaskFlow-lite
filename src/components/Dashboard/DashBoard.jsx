@@ -1,21 +1,15 @@
 import { useState } from "react";
 import { TaskProvider, useTaskContext } from "../Tasks/context/TaskContext.jsx";
-import TaskBoard from "../Tasks/components/TaskBoard/components/TaskBoard.jsx";
+import TaskBoard from "../Tasks/components/TaskBoard/TaskBoard.jsx";
 import TaskForm from "../Tasks/components/TaskForm/components/TaskForm.jsx";
 import { useTaskFilter } from "../Tasks/hooks/useTaskFilter.js";
 import { useDebounce } from "../../common/hooks/useDebounce.js";
-import Modal from "../../common/Modal/Modal.jsx";
+import Modal from "../../common/Modal/components/Modal.jsx";
+import { useModal } from "../../common/Modal/context/ModalContext.jsx"; //
 
 const DashboardContent = () => {
-  const {
-    tasks,
-    loading,
-    error,
-    isModalOpen,
-    closeModal,
-    editingTask,
-    openCreateModal,
-  } = useTaskContext();
+  const { tasks, loading, error } = useTaskContext();
+  const { openModal } = useModal();
   const [searchTerm, setSearchTerm] = useState("");
   const [priorityFilter, setPriorityFilter] = useState("All");
 
@@ -44,16 +38,8 @@ const DashboardContent = () => {
           <option value="Low">Low</option>
         </select>
 
-        <button onClick={openCreateModal}> New Task</button>
+        <button onClick={() => openModal("taskForm")}> New Task</button>
       </div>
-
-      <Modal
-        isOpen={isModalOpen}
-        onClose={closeModal}
-        title={editingTask ? "Edit Task" : "Create New Task"}
-      >
-        <TaskForm />
-      </Modal>
 
       <TaskBoard tasks={filteredTasks} loading={loading} error={error} />
     </div>
