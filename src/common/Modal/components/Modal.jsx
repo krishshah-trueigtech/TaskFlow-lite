@@ -11,18 +11,18 @@ const Modal = ({ isOpen, onClose, children }) => {
       onClick={onClose}
     >
       <div
-        className="modal-content  bg-primaryColor border-sm shadow-[0_5px_15px_rgba(0,0,0,0.3)] relative max-w-[90dvw]  "
+        className="modal-content  bg-primaryColor border-sm shadow-[0_5px_15px_rgba(0,0,0,0.3)] overflow-auto relative max-w-[90dvw] max-h-[90dvh]"
         onClick={(e) => e.stopPropagation()}
       >
         {/* <div className="modal-header"> */}
         {/* {title && <h2>{title}</h2>} */}
         <div className="flex absolute right-0 p-2">
-          <button
-            className="modal-close-btn  border-none z-1 "
+          <a
+            className="bg-none border-none text-[1.5rem] cursor-pointer text-[#666] p-5 z-1 ]"
             onClick={onClose}
           >
             &times;
-          </button>
+          </a>
         </div>
 
         {/* </div> */}

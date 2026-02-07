@@ -14,13 +14,6 @@
   font-size: 1.5rem;
 }
 
-.modal-close-btn {
-  background: none;
-  font-size: 1.5rem;
-  cursor: pointer;
-  color: #666;
-  padding: 0 5px;
-}
 
 .modal-close-btn:hover {
   color: #ff4d4f;
