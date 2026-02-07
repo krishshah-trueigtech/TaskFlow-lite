@@ -1,19 +1,12 @@
-import { useNavigate } from "react-router-dom";
 import { useAuth } from "../Authentication/context/authContext";
 import { useModal } from "../../common/Modal/context/ModalContext.jsx";
 
 const Navbar = () => {
-  const { user, logout } = useAuth();
-  const navigate = useNavigate();
-  const { openModal, closeModal } = useModal();
+  const { user } = useAuth();
+  const { openModal } = useModal();
 
-  const handleLogout = () => {
-    const confirmLogout = window.confirm("Are you sure you want to log out?");
-    if (confirmLogout) {
-      closeModal();
-      logout();
-      navigate("/");
-    }
+  const handleLogoutClick = () => {
+    openModal("logoutConfirm");
   };
 
   return (
@@ -33,7 +26,7 @@ const Navbar = () => {
               >
                 User Details
               </button>
-              <button className="form-button" onClick={handleLogout}>
+              <button className="form-button" onClick={handleLogoutClick}>
                 LogOut
               </button>
             </>
