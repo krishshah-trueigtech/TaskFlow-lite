@@ -43,14 +43,14 @@
     {
       "id": "1",
       "title": "Setup Project",
-      "status": "to-do",
+      "status": "done",
       "priority": "Low",
       "dueDate": "2026-02-01",
       "assignee": "admin"
     },
     {
       "title": "Mini project",
-      "status": "to-do",
+      "status": "done",
       "priority": "High",
       "dueDate": "2222-02-22",
       "assignee": "Admin",
@@ -62,7 +62,7 @@
       "priority": "High",
       "dueDate": "2222-02-22",
       "assignee": "asdf",
-      "status": "in-progress"
+      "status": "to-do"
     },
     {
       "id": "1769590204945",
@@ -70,7 +70,7 @@
       "priority": "Medium",
       "dueDate": "22222-02-22",
       "assignee": "admin",
-      "status": "done"
+      "status": "in-progress"
     },
     {
       "id": "2312121"
