@@ -13,7 +13,7 @@ export const loginUser = async (credentials) => {
   return users[0];
 };
 
-export const register = async (data) => {
+export const registerUser = async (data) => {
   try {
     const response = await axios.post(API_URL, data);
     return response?.data;
