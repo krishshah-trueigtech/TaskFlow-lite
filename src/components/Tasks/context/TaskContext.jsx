@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { useTasks } from "../hooks/useTasks";
+import {useMemo} from "react";
 
 const TaskContext = createContext();
 
@@ -28,16 +29,18 @@ export const TaskProvider = ({ children }) => {
     setIsModalOpen(false);
   };
 
+  const contextValue = useMemo(() => ({
+    ...taskData,
+    isModalOpen,
+    editingTask,
+    openCreateModal,
+    openEditModal,
+    closeModal,
+  }), [taskData, isModalOpen, editingTask]);
+
   return (
     <TaskContext.Provider
-      value={{
-        ...taskData,
-        isModalOpen,
-        editingTask,
-        openCreateModal,
-        openEditModal,
-        closeModal,
-      }}
+      value={contextValue}
     >
       {children}
     </TaskContext.Provider>

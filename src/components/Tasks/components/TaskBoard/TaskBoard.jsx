@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
-import TaskCard from "../../TaskCard/components/TaskCard";
-import { useTaskContext } from "../../../context/TaskContext";
+import TaskCard from "../TaskCard/components/TaskCard";
+import { useTaskContext } from "../../context/TaskContext";
 import "./TaskBoard.css";
 
 const TaskBoard = ({ tasks, loading, error }) => {

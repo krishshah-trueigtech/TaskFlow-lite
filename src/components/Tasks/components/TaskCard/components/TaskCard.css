@@ -1,3 +1,8 @@
+@import "tailwindcss";
+
+@layer components{
+
+
 .task-card {
   background: white;
   padding: 15px;
@@ -8,6 +13,7 @@
   text-align: left;
 
   color: #333 !important;
+  /* @apply bg-white p-4 rounded-md mb-4 text-left text-[#333]; */
 }
 
 .task-card:hover {
@@ -19,6 +25,7 @@
   display: flex;
   justify-content: space-between;
   margin-bottom: 8px;
+  width:100%
 }
 
 .priority-tag {
@@ -27,13 +34,8 @@
   text-transform: uppercase;
 }
 
-.delete-btn {
-  background: none;
-  border: none;
-  color: #999;
-  font-size: 1.2rem;
-  cursor: pointer;
-  padding: 0;
+.delete-btn {  
+@apply bg-transparent!  border-none! text-[#999] text-[1.2rem] cursor-pointer;
 }
 
 .delete-btn:hover {
@@ -90,4 +92,5 @@
 }
 .btn-secondary:hover {
   background-color: #e0e0e0;
+}
 }

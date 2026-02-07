@@ -1,10 +1,12 @@
 import "./TaskCard.css";
 import useTaskCard from "../hooks/useTaskCard";
-import { memo } from "react";
+
 
 const TaskCard = (props) => {
+  const { status } = props;
   const { getPriorityColor, handleStatusChange, handleDelete, openEditModal } =
     useTaskCard(props);
+
   return (
     <div
       className="task-card"
@@ -54,7 +56,7 @@ const TaskCard = (props) => {
         {status === "to-do" && (
           <button
             onClick={() => handleStatusChange("in-progress")}
-            className="btn-start"
+            className="btn text-primaryText"
           >
             Start
           </button>
@@ -63,13 +65,13 @@ const TaskCard = (props) => {
           <>
             <button
               onClick={() => handleStatusChange("to-do")}
-              className="btn-secondary"
+              className="btn text-primaryText"
             >
               ← Back
             </button>
             <button
               onClick={() => handleStatusChange("done")}
-              className="btn-done"
+              className="btn text-primaryText"
             >
               Done
             </button>
@@ -78,7 +80,7 @@ const TaskCard = (props) => {
         {status === "done" && (
           <button
             onClick={() => handleStatusChange("in-progress")}
-            className="btn-secondary"
+            className="btn text-primaryText"
           >
             Reopen
           </button>
@@ -88,4 +90,4 @@ const TaskCard = (props) => {
   );
 };
 
-export default memo(TaskCard);
+export default TaskCard;

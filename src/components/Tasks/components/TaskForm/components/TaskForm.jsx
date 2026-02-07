@@ -1,37 +1,20 @@
 import { useTaskForm } from "../hooks/useTaskForm";
 import { getTaskFormFields } from "../constants/taskFormFields";
-import InputField from "../../../../../common/Input/InputField";
+import FormGenerator from "../../../../../common/FormGenerator/FormGenerator";
 
 const TaskForm = () => {
-  const { control, handleSubmit, errors, today, editingTask } =
-    useTaskForm();
-
+  const { control, handleSubmit, errors, today, editingTask } = useTaskForm();
   const formFields = getTaskFormFields(today);
 
   return (
-    <form onSubmit={handleSubmit}
-    className="form">
-      {formFields.map((field) => (
-        <div key={field.name}>
-          <InputField
-            control={control}
-            name={field.name}
-            label={field.label}
-            placeholder={field.placeholder}
-            type={field.type}
-            rules={field.rules}
-            options={field.options}
-          />
+    <form onSubmit={handleSubmit} className="form">
+      <FormGenerator 
+        formFields={formFields} 
+        control={control} 
+        errors={errors} 
+      />
 
-          {errors[field.name] && (
-            <span style={{ color: "red", fontSize: "0.8rem" }}>
-              {errors[field.name]?.message?.toString()}
-            </span>
-          )}
-        </div>
-      ))}
-
-      <button type="submit" className="submit-btn">
+      <button type="submit" className="submit-btn mt-4">
         {editingTask ? "Update Task" : "Add Task"}
       </button>
     </form>
