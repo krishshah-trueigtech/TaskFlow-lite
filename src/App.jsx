@@ -6,6 +6,7 @@ import { ModalProvider } from "./common/Modal/context/ModalContext.jsx";
 import GlobalModal from "./common/Modal/components/GlobalModal";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { TaskProvider } from "./components/Tasks/context/TaskContext";
 
 function App() {
   return (
@@ -13,10 +14,12 @@ function App() {
       <AuthProvider>
         <ModalProvider>
           <BrowserRouter>
-            <Navbar />
-            <AppRoutes />
-            <GlobalModal />
-            <ToastContainer position="top-right" autoClose={3000} />
+            <TaskProvider>
+              <Navbar />
+              <AppRoutes />
+              <GlobalModal />
+              <ToastContainer position="top-right" autoClose={3000} />
+            </TaskProvider>
           </BrowserRouter>
         </ModalProvider>
       </AuthProvider>
