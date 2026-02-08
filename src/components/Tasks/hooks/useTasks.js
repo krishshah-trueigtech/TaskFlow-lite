@@ -3,20 +3,24 @@ import * as TaskServices from "../../../services/TaskServices.js";
 
 export const useTasks = () => {
   const [tasks, setTasks] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState({
+    "to-do": false,
+    "in-progress": false,
+    "done": false,
+  });
   const [error, setError] = useState(null);
 
   const fetchTasks = useCallback(async () => {
-    setLoading(true);
+    setLoading({ "to-do": true, "in-progress": true, "done": true });
     try {
       const response = await TaskServices.fetchTasks();
       setTasks(response);
     } catch (err) {
       setError(err.message || "Something went wrong");
     } finally {
-      setLoading(false);
+      setLoading({ "to-do": false, "in-progress": false, "done": false });
     }
-  });
+  },[]);
 
   const createTask = useCallback(async (taskData) => {
     try {
@@ -25,7 +29,7 @@ export const useTasks = () => {
     } catch (err) {
       setError(err.message || "Something went wrong");
     }
-  });
+  },[]);
 
   const updateTask = useCallback(async (taskData) => {
     const previousTasks = [...tasks];
@@ -43,7 +47,7 @@ export const useTasks = () => {
       setError(err);
       return false;
     }
-  });
+  },[tasks]);
 
   const deleteTask = useCallback(async (id) => {
     const previousTasks = [...tasks];
@@ -57,7 +61,7 @@ export const useTasks = () => {
       setError(err);
       return false;
     }
-  });
+  },[tasks]);
 
   return {
     tasks,
