@@ -1,6 +1,6 @@
 import AuthForm from "../../components/Authentication/components/AuthForm";
 import UserDetailsForm from "../../components/Authentication/components/userDetailForm";
-import TaskForm from "../../components/Tasks/components/TaskForm/components/TaskForm";
+import TaskForm from "../../components/Tasks/components/TaskForm";
 import LogoutConfirm from "../../components/Authentication/components/LogoutConfirm";
 
 const MODAL_COMPONENTS = {

@@ -1,36 +1,27 @@
 import React from "react";
 import { createPortal } from "react-dom";
-import "./Modal.css";
 
 const Modal = ({ isOpen, onClose, children }) => {
   if (!isOpen) return null;
 
   return createPortal(
     <div
-      className="flex fixed top-0 left-0 w-full h-full bg-opacity-5 justify-center items-center z-1000 backdrop-blur-[2px]"
+      className="fixed inset-0 flex items-center justify-center z-[1000] bg-black/5 backdrop-blur-sm"
       onClick={onClose}
     >
       <div
-        className="modal-content  bg-primaryColor border-sm shadow-[0_5px_15px_rgba(0,0,0,0.3)] overflow-auto relative max-w-[90dvw] max-h-[90dvh]"
+        className="animate-slide-down bg-primaryColor border border-white/10 shadow-2xl overflow-auto relative max-w-[90vw] max-h-[90vh] rounded-lg"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* <div className="modal-header"> */}
-        {/* {title && <h2>{title}</h2>} */}
-        <div className="flex absolute right-0 p-2">
-          <a
-            className="bg-none border-none text-[1.5rem] cursor-pointer text-[#666] p-5 z-1 ]"
+        <div className="absolute top-2 right-2 z-10">
+          <button
+            className="bg-transparent text-2xl text-gray-400 hover:text-red-500 transition-colors p-2 leading-none"
             onClick={onClose}
           >
             &times;
-          </a>
+          </button>
         </div>
-
-        {/* </div> */}
-        {/* <div className="modal-body"> */}
-
         {children}
-
-        {/* </div> */}
       </div>
     </div>,
     document.body,
