@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import * as TaskServices from "../../../services/TaskServices.js";
 
 export const useTasks = () => {
@@ -6,7 +6,7 @@ export const useTasks = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const fetchTasks = async () => {
+  const fetchTasks = useCallback(async () => {
     setLoading(true);
     try {
       const response = await TaskServices.fetchTasks();
@@ -16,22 +16,18 @@ export const useTasks = () => {
     } finally {
       setLoading(false);
     }
-  };
+  });
 
-  const createTask = async (taskData) => {
-    setLoading(true);
-
+  const createTask = useCallback(async (taskData) => {
     try {
       const newTask = await TaskServices.createTask(taskData);
       setTasks((prev) => [...prev, newTask]);
     } catch (err) {
       setError(err.message || "Something went wrong");
-    } finally {
-      setLoading(false);
     }
-  };
+  });
 
-  const updateTask = async (taskData) => {
+  const updateTask = useCallback(async (taskData) => {
     const previousTasks = [...tasks];
 
     setTasks((prev) =>
@@ -47,9 +43,9 @@ export const useTasks = () => {
       setError(err);
       return false;
     }
-  };
+  });
 
-  const deleteTask = async (id) => {
+  const deleteTask = useCallback(async (id) => {
     const previousTasks = [...tasks];
     setTasks((prev) => prev.filter((task) => task.id !== id));
 
@@ -61,7 +57,7 @@ export const useTasks = () => {
       setError(err);
       return false;
     }
-  };
+  });
 
   return {
     tasks,
