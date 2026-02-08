@@ -2,7 +2,7 @@ import React from "react";
 import { useAuthForm } from "../hooks/useAuthForm";
 import loginFields from "../constants/loginFields";
 import signUpFields from "../constants/SignUpFields";
-import FormGenerator from "../../../common/FormGenerator/FormGenerator";
+import FormGenerator from "../../../common/components/FormGenerator";
 import image from "../../../assets/image.webp";
 
 const AuthForm = ({ mode, onClose, onSwitchMode }) => {

@@ -1,6 +1,6 @@
 import userDetailFields from "../constants/userDetailField.js";
 import { useUserDetailForm } from "../hooks/useUserDetailForm";
-import FormGenerator from "../../../common/FormGenerator/FormGenerator.jsx";
+import FormGenerator from "../../../common/components/FormGenerator";
 import profile from "../../../assets/profile.webp";
 
 const UserDetailForm = ({ onClose }) => {
