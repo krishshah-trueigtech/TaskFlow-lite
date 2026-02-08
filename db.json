@@ -41,6 +41,14 @@
   ],
   "tasks": [
     {
+      "id": "1",
+      "title": "Setup Project",
+      "status": "to-do",
+      "priority": "Low",
+      "dueDate": "2026-02-01",
+      "assignee": "admin"
+    },
+    {
       "title": "Mini project",
       "status": "in-progress",
       "priority": "High",

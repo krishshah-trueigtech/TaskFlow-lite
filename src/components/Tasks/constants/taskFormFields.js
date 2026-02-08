@@ -1,6 +1,4 @@
-import { memo } from "react";
-
-export const getTaskFormFields = (today) => [
+const getTaskFormFields = (today) => [
   {
     name: "title",
     label: "Title",
@@ -38,4 +36,4 @@ export const getTaskFormFields = (today) => [
   },
 ];
 
-export default memo(getTaskFormFields);
+export default getTaskFormFields;

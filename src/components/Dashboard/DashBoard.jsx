@@ -30,7 +30,7 @@ const DashboardContent = () => {
         <select
           value={priorityFilter}
           onChange={(e) => setPriorityFilter(e.target.value)}
-          style={{ padding: "8px" }}
+          className="form-input p-4 max-w-fit"
         >
           <option value="All">All Priorities</option>
           <option value="High">High</option>
@@ -47,9 +47,5 @@ const DashboardContent = () => {
 };
 
 export const Dashboard = () => {
-  return (
-    <TaskProvider>
-      <DashboardContent />
-    </TaskProvider>
-  );
+  return <DashboardContent />;
 };
