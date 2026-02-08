@@ -4,8 +4,8 @@ import useBoardTasks from "../hooks/useBoardTasks";
 import columns from "../constants/columns";
 import { useTaskContext } from "../context/TaskContext";
 
-const TaskBoard = () => {
-  const { onDragEnd, tasks, error, loading } = useTaskContext();
+const TaskBoard = ({ tasks, loading, error }) => {
+  const { onDragEnd } = useTaskContext();
   const { columnTasks } = useBoardTasks(tasks);
   if (error)
     return (
