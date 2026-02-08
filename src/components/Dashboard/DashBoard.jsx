@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { TaskProvider, useTaskContext } from "../Tasks/context/TaskContext.jsx";
-import TaskBoard from "../Tasks/components/TaskBoard/TaskBoard.jsx";
-import TaskForm from "../Tasks/components/TaskForm/components/TaskForm.jsx";
+import TaskBoard from "../Tasks/components/TaskBoard.jsx";
+import TaskForm from "../Tasks/components/TaskForm.jsx";
 import { useTaskFilter } from "../Tasks/hooks/useTaskFilter.js";
 import { useDebounce } from "../../common/hooks/useDebounce.js";
 import Modal from "../../common/Modal/components/Modal.jsx";
