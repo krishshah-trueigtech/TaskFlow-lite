@@ -21,13 +21,13 @@ const TaskCard = (props) => {
         <div className="flex gap-1">
           <button
             onClick={() => openEditModal(props)}
-            className="p-1 hover:bg-gray-100 rounded"
+            className="!bg-transparent !border-none p-1 hover:bg-gray-100 rounded"
           >
             ✏️
           </button>
           <button
             onClick={handleDelete}
-            className="text-gray-400 text-xl hover:text-red-500 transition-colors"
+            className="!bg-transparent !border-none text-gray-900 text-xl hover:text-red-500 "
           >
             &times;
           </button>

@@ -1,13 +1,13 @@
 import { createContext, useContext, useEffect, useState, useCallback, useMemo } from "react";
 import { useTasks } from "../hooks/useTasks";
+import { useModal } from "../../../common/Modal/context/ModalContext";
 
 const TaskContext = createContext();
 
 export const TaskProvider = ({ children }) => {
   const taskData = useTasks();
   const { fetchTasks, updateTask } = taskData;
-
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const { openModal, closeModal: closeGlobalModal } = useModal();
   const [editingTask, setEditingTask] = useState(null);
 
   useEffect(() => {
@@ -16,18 +16,18 @@ export const TaskProvider = ({ children }) => {
 
   const openCreateModal = useCallback(() => {
     setEditingTask(null);
-    setIsModalOpen(true);
-  }, []);
+    openModal("taskForm");
+  }, [openModal]);
 
   const openEditModal = useCallback((task) => {
     setEditingTask(task);
-    setIsModalOpen(true);
-  }, []);
+    openModal("taskForm", { editingTask: task });
+  }, [openModal]);
 
   const closeModal = useCallback(() => {
     setEditingTask(null);
-    setIsModalOpen(false);
-  }, []);
+    closeGlobalModal();
+  }, [closeGlobalModal]);
 
   const onDragEnd = useCallback((result) => {
     const { destination, source, draggableId } = result;
@@ -44,7 +44,6 @@ export const TaskProvider = ({ children }) => {
   const contextValue = useMemo(
     () => ({
       ...taskData,
-      isModalOpen,
       editingTask,
       openCreateModal,
       openEditModal,
@@ -53,7 +52,6 @@ export const TaskProvider = ({ children }) => {
     }),
     [
       taskData,
-      isModalOpen,
       editingTask,
       openCreateModal,
       openEditModal,
