@@ -1,8 +1,7 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 @import "tailwindcss";
 
 @theme {
-  --font-poppins: "Poppins", sans-serif;
+  --font-poppins: "Poppins", ui-sans-serif, system-ui, sans-serif;
   --color-formInputFocus: #e4a02d;
   --color-formInputBorder: rgba(255, 255, 255, 0.38);
   --color-formInputbutton: #420356;
@@ -10,6 +9,18 @@
   --color-primaryColor: #200b33;
   --color-primaryText: #fff;
   --color-secondaryColor: #2c0e48;
+
+  --animate-slide-down: slideDown 0.3s ease-out;
+  @keyframes slideDown {
+    from {
+      transform: translateY(-20px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
 }
 
 * {
@@ -26,7 +37,7 @@ a:hover {
 }
 
 body {
-  @apply m-0 min-w-xs min-h-screen bg-primaryColor text-primaryText leading-4 font-normal font-['poppins'] max-w-full;
+  @apply m-0 min-w-xs min-h-screen bg-primaryColor text-primaryText leading-4 font-normal font-poppins max-w-full;
 }
 
 h1 {
