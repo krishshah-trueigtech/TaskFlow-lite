@@ -1,6 +1,6 @@
 import { useTaskForm } from "../hooks/useTaskForm";
-import { getTaskFormFields } from "../constants/taskFormFields";
-import FormGenerator from "../../../../../common/components/FormGenerator";
+import getTaskFormFields from "../constants/taskFormFields";
+import FormGenerator from "../../../common/components/FormGenerator";
 
 const TaskForm = () => {
   const { control, handleSubmit, errors, today, editingTask } = useTaskForm();

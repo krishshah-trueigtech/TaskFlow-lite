@@ -1,62 +1,49 @@
-import "./TaskCard.css";
 import useTaskCard from "../hooks/useTaskCard";
-
-
+import { memo } from "react";
 const TaskCard = (props) => {
-  const { status } = props;
+  const { status, priority, title, dueDate, assignee } = props;
   const { getPriorityColor, handleStatusChange, handleDelete, openEditModal } =
     useTaskCard(props);
 
   return (
     <div
-      className="task-card"
-      style={{ borderLeft: `5px solid ${getPriorityColor(props.priority)}` }}
+      className="bg-white p-4 rounded-lg shadow-md transition-transform duration-200 hover:-translate-y-0.5 hover:shadow-lg text-left border-l-[5px]"
+      style={{ borderLeftColor: getPriorityColor(priority) }}
     >
-      <div className="card-header">
+      <div className="flex justify-between items-start mb-2 w-full">
         <span
-          className="priority-tag"
-          style={{ color: getPriorityColor(props.priority) }}
+          className="font-bold text-xs uppercase"
+          style={{ color: getPriorityColor(priority) }}
         >
-          {props.priority}
+          {priority}
         </span>
-        <div className="header-actions">
+        <div className="flex gap-1">
           <button
             onClick={() => openEditModal(props)}
-            className="edit-btn"
-            style={{
-              marginRight: "5px",
-              background: "none",
-              border: "none",
-              cursor: "pointer",
-            }}
+            className="p-1 hover:bg-gray-100 rounded"
           >
             ✏️
           </button>
           <button
             onClick={handleDelete}
-            className="delete-btn"
-            title="Delete Task"
+            className="text-gray-400 text-xl hover:text-red-500 transition-colors"
           >
             &times;
           </button>
         </div>
       </div>
 
-      <h3>{props.title}</h3>
-      <div className="card-details">
-        <p>
-          <small>{props.dueDate}</small>
-        </p>
-        <p>
-          <small>{props.assignee || "Unassigned"}</small>
-        </p>
+      <h3 className="my-1.5 font-bold text-lg text-black">{title}</h3>
+      <div className="text-gray-600 text-sm">
+        <p>{dueDate}</p>
+        <p className="italic">{assignee || "Unassigned"}</p>
       </div>
 
-      <div className="card-actions">
+      <div className="mt-4 flex gap-2">
         {status === "to-do" && (
           <button
             onClick={() => handleStatusChange("in-progress")}
-            className="btn text-primaryText"
+            className="flex-1 p-2 rounded  text-white"
           >
             Start
           </button>
@@ -65,13 +52,13 @@ const TaskCard = (props) => {
           <>
             <button
               onClick={() => handleStatusChange("to-do")}
-              className="btn text-primaryText"
+              className="flex-1 p-2 rounded   text-white"
             >
               ← Back
             </button>
             <button
               onClick={() => handleStatusChange("done")}
-              className="btn text-primaryText"
+              className="flex-1 p-2 rounded  text-white "
             >
               Done
             </button>
@@ -80,7 +67,7 @@ const TaskCard = (props) => {
         {status === "done" && (
           <button
             onClick={() => handleStatusChange("in-progress")}
-            className="btn text-primaryText"
+            className="flex-1 p-2 rounded  text-white"
           >
             Reopen
           </button>
@@ -90,4 +77,4 @@ const TaskCard = (props) => {
   );
 };
 
-export default TaskCard;
+export default memo(TaskCard);
