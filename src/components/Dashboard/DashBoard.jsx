@@ -6,9 +6,19 @@ import { useTaskFilter } from "../Tasks/hooks/useTaskFilter.js";
 import { useDebounce } from "../../common/hooks/useDebounce.js";
 import Modal from "../../common/Modal/components/Modal.jsx";
 import BulkActionBar from "../Tasks/components/BulkActionBar";
+import { OnlineStatus } from "../../common/hooks/useOnlineStatus";
+
 const DashboardContent = () => {
-  const { tasks, loading, error, openCreateModal, selectedTaskIds } =
-    useTaskContext();
+  const {
+    tasks,
+    loading,
+    error,
+    handleRetry,
+    openCreateModal,
+    selectedTaskIds,
+    fetchTasks,
+  } = useTaskContext();
+  const isOnline = OnlineStatus();
   const [searchTerm, setSearchTerm] = useState("");
   const [priorityFilter, setPriorityFilter] = useState("All");
 
@@ -17,6 +27,31 @@ const DashboardContent = () => {
 
   return (
     <div className="dashboard-container">
+      {!isOnline && (
+        <div className="bg-red-500 text-white p-2 text-center">
+          You are offline. Some features may be unavailable.
+        </div>
+      )}
+
+      {error && (
+        <div className="flex flex-col items-center p-4 bg-red-100 border-l-4 border-red-500 my-2">
+          <p className="text-red-700 font-medium">{error}</p>
+          <div className="flex gap-2">
+            <button
+              onClick={handleRetry}
+              className="mt-2 bg-red-600 text-white px-4 py-1 rounded hover:bg-red-700"
+            >
+              Retry Last Action
+            </button>
+            <button
+              onClick={fetchTasks}
+              className="mt-2 bg-gray-500 text-white px-4 py-1 rounded"
+            >
+              Refresh List
+            </button>
+          </div>
+        </div>
+      )}
       <div className="flex p-4 gap-2 items-center ">
         <input
           type="text"
