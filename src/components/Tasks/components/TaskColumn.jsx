@@ -1,24 +1,30 @@
 import { Droppable } from "@hello-pangea/dnd";
 import TaskList from "./TaskList";
 
-const TaskColumn = ({ title, tasks = [], status, isLoading, isCollapsed, onToggle }) => {
+const TaskColumn = ({
+  title,
+  tasks = [],
+  status,
+  isLoading,
+  isCollapsed,
+  onToggle,
+}) => {
   return (
     <div
-      className={`flex-1 bg-gray-100 dark:bg-[#200b33] rounded-lg p-3 transition-all duration-300 max-w-sm w-full`}
+      className={`flex-1 bg-gray-100 dark:bg-columnColor rounded-lg p-3 transition-all duration-300 max-w-sm w-full 
+        ${isCollapsed && "h-[4rem]"}`}
     >
-      <div 
-        className="flex items-center justify-between border-b-2 border-gray-300 dark:border-gray-700 pb-2.5 mb-4 cursor-pointer"
+      <div
+        className="flex items-center justify-center text-center border-b-2 border-gray-300 dark:border-gray-700 pb-2.5 mb-4 cursor-pointer"
         onClick={onToggle}
       >
-        {title} ({tasks.length})
         {!isCollapsed && (
           <h3 className="font-bold text-gray-800 dark:text-white">
-             {isLoading[status] ? "..." : null}
+            {isLoading[status] ? "..." : null}
           </h3>
         )}
-        
         <button className="text-gray-500 hover:text-gray-800 dark:text-gray-300">
-          {isCollapsed ? "▶" : "▼"} 
+          {title}
         </button>
       </div>
 
@@ -30,7 +36,7 @@ const TaskColumn = ({ title, tasks = [], status, isLoading, isCollapsed, onToggl
               {...provided.droppableProps}
               className={`flex flex-col gap-2.5 min-h-[12rem] max-h-[29rem] overflow-y-auto  p-1 ${
                 snapshot.isDraggingOver
-                  ? "bg-indigo-50 dark:bg-indigo-900/20"
+                  ? "bg-indigo-50 dark:bg-indigo-900/20 "
                   : "bg-transparent"
               }`}
             >
@@ -44,14 +50,10 @@ const TaskColumn = ({ title, tasks = [], status, isLoading, isCollapsed, onToggl
           )}
         </Droppable>
       ) : (
-        <div 
-            className="flex items-center justify-center cursor-pointer"
-            onClick={onToggle}
-        >
-            <span className="font-bold text-gray-500 whitespace-nowrap">
-                {title} ({tasks.length})
-            </span>
-        </div>
+        <div
+          className="flex items-center justify-center cursor-pointer"
+          onClick={onToggle}
+        ></div>
       )}
     </div>
   );
