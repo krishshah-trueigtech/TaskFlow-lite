@@ -1,7 +1,6 @@
 import useTaskCard from "../hooks/useTaskCard";
 import editIcon from "../../../assets/editIcon.webp";
 import deleteIcon from "../../../assets/deleteIcon.webp";
-
 import { memo } from "react";
 
 const TaskCard = (props) => {
@@ -16,15 +15,16 @@ const TaskCard = (props) => {
     multiSelectionCount,
   } = props;
   const { getPriorityColor, handleDelete, openEditModal } = useTaskCard(props);
+
   return (
-    <div className="flex  items-center gap-2 relative">
+    <div className="flex items-center gap-2 relative">
       {multiSelectionCount > 1 && (
-        <div className="absolute-top-3 -right-2 z-50 bg-red-600 text-white text-xs font-bold h-6 w-6 flex items-center justify-center rounded-full shadow-md border-2 border-white">
+        <div className="absolute -top-3 -right-2 z-50 bg-badge-bg text-white text-xs font-bold h-6 w-6 flex items-center justify-center rounded-full shadow-md border-2 border-badge-border">
           {multiSelectionCount}
         </div>
       )}
 
-      <div className="!bg-taskCard  p-4 rounded-lg flex-grow shadow-md transition-transform duration-200 hover:-translate-y-0.5 hover:shadow-lg text-left ]">
+      <div className="task-card-custom p-4 rounded-lg flex-grow shadow-md transition-transform duration-200 hover:-translate-y-0.5 hover:shadow-lg text-left">
         <div className="flex justify-between items-start mb-2 w-full">
           <span
             className="font-bold text-xs uppercase"
@@ -39,26 +39,27 @@ const TaskCard = (props) => {
               e.stopPropagation();
               onToggle(id);
             }}
+            className="cursor-pointer"
           />
         </div>
 
-        <h3 className="my-1.5 font-bold text-lg text-black">{title}</h3>
-        <div className="text-gray-600 text-sm">
+        <h3 className="my-1.5 font-bold text-lg text-white">{title}</h3>
+        <div className="text-white text-sm">
           <p>{dueDate}</p>
           <p className="italic">{assignee || "Unassigned"}</p>
         </div>
-        <div className="flex justify-end gap-1">
+        <div className="flex justify-end gap-3">
           <button
             onClick={() => openEditModal(props)}
-            className="!bg-functionalButton !border-none p-1 hover:bg-gray-100 rounded"
+            className="!bg-functionalButton !border-none  hover:bg-icon-edit-bg-hover"
           >
-            <img src={editIcon} className="h-full " />
+            <img src={editIcon} className="object-cover" alt="Edit" />
           </button>
           <button
             onClick={handleDelete}
-            className="!bg-functionalButton  !border-none text-gray-900 text-xl hover:text-red-500 "
+            className="!bg-functionalButton !border-none text-icon-delete  hover:text-icon-delete-hover"
           >
-            <img src={deleteIcon} className="h-full " />
+            <img src={deleteIcon} className="object-cover" alt="Delete" />
           </button>
         </div>
       </div>

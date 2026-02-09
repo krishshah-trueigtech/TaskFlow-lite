@@ -11,21 +11,22 @@ const TaskColumn = ({
 }) => {
   return (
     <div
-      className={`flex-1 bg-gray-100 dark:bg-columnColor rounded-lg p-3 transition-all duration-300 max-w-sm w-full 
-        `}
+      className={`flex-1 bg-surface-light dark:bg-columnColor rounded-[1.25rem] p-3 transition-all duration-300 max-w-sm w-full`}
     >
       <div
-        className="flex items-center justify-center text-center  border-gray-300 dark:border-gray-700 pb-2.5 mb-4 cursor-pointer"
+        className="flex items-center justify-center text-center border-border-light dark:border-border-dark pb-2.5 mb-4 cursor-pointer"
         onClick={onToggle}
       >
         {!isCollapsed && (
-          <h3 className="font-bold text-gray-800 dark:text-white">
+          <h3 className="font-bold text-text-dark dark:text-white">
             {isLoading[status] ? "..." : null}
           </h3>
         )}
-        <button className="text-gray-500 hover:text-gray-800 dark:text-gray-300">
-          {title}
-        </button>
+        <div className="w-full">
+          <button className="toggle-btn-custom text-white w-full">
+            {title}
+          </button>
+        </div>
       </div>
 
       {!isCollapsed ? (
@@ -34,9 +35,9 @@ const TaskColumn = ({
             <div
               ref={provided.innerRef}
               {...provided.droppableProps}
-              className={`flex flex-col gap-2.5 min-h-[12rem] max-h-[29rem] overflow-y-auto  p-1   ${
+              className={`flex flex-col gap-2.5 min-h-[12rem] max-h-[29rem] overflow-y-auto p-1 ${
                 snapshot.isDraggingOver
-                  ? "bg-indigo-50 dark:bg-indigo-900/20 "
+                  ? "bg-drag-overlay-light dark:bg-drag-overlay-dark"
                   : "bg-transparent"
               }`}
             >
