@@ -46,7 +46,7 @@
       "priority": "medium",
       "dueDate": "7777-07-07",
       "assignee": "asdf",
-      "status": "to-do",
+      "status": "in-progress",
       "isSelected": false
     },
     {

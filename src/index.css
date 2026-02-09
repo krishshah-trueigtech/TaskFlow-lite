@@ -11,15 +11,6 @@
   --color-secondaryColor: #2c0e48;
   --color-columnColor: #371650;
   --color-functionalButton: #2c0d47;
-  --color-taskCard: radial-gradient(
-      169.23% 169.23% at 41.47% -28.17%,
-      #461446 0%,
-      #2c063f 55.66%,
-      #a419a7 100%
-    )
-    --color-taskBoard: border: 2.4px solid;
-
-  border-image-source: linear-gradient(90deg, #f2c21b 0%, #c16b08 100%);
 
   --animate-slide-down: slideDown 0.3s ease-out;
   @keyframes slideDown {

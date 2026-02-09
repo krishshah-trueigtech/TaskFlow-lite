@@ -7,6 +7,7 @@ import GlobalModal from "./common/Modal/components/GlobalModal";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { TaskProvider } from "./components/Tasks/context/TaskContext";
+import ErrorBoundary from "./common/components/ErrorBoundary/index";
 
 function App() {
   return (
@@ -16,7 +17,9 @@ function App() {
           <BrowserRouter>
             <TaskProvider>
               <Navbar />
-              <AppRoutes />
+              <ErrorBoundary>
+                <AppRoutes />
+              </ErrorBoundary>
               <GlobalModal />
               <ToastContainer
                 position="top-right"
