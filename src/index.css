@@ -2,15 +2,58 @@
 
 @theme {
   --font-poppins: "Poppins", ui-sans-serif, system-ui, sans-serif;
-  --color-formInputFocus: #e4a02d;
-  --color-formInputBorder: rgba(255, 255, 255, 0.38);
-  --color-formInputbutton: #420356;
-  --color-switchText: #de9700;
+
+  /* Brand Colors */
   --color-primaryColor: #200b33;
-  --color-primaryText: #fff;
   --color-secondaryColor: #2c0e48;
   --color-columnColor: #371650;
   --color-functionalButton: #2c0d47;
+
+  /* Text Colors */
+  --color-primaryText: #fff;
+  --color-text-subtle: #9ca3af;
+  --color-text-dark: #1f2937;
+  --color-switchText: #de9700;
+  --color-link-hover: #535bf2;
+  --color-link-hover-light: #747bff;
+
+  /* Form & Inputs */
+  --color-formInputFocus: #e4a02d;
+  --color-formInputBorder: rgba(255, 255, 255, 0.38);
+  --color-formInputbutton: #420356;
+
+  /* Task Card  */
+  --color-task-gradient-start: #461446;
+  --color-task-gradient-mid: #2c063f;
+  --color-task-gradient-end: #a419a7;
+  --color-task-border: rgba(115, 22, 117, 0.59);
+
+  /* Badges & Indicators */
+  --color-badge-bg: #dc2626;
+  --color-badge-border: #ffffff;
+
+  /* Toggle Button Gradient */
+  --color-toggle-gradient-start: #f2c21b;
+  --color-toggle-gradient-end: #c16b08;
+
+  --color-surface-light: #f3f4f6;
+  --color-surface-hover: #e5e7eb;
+  --color-bg-light: #ffffff;
+  --color-text-light: #213547;
+  --color-btn-bg-light: #f9f9f9;
+
+  /* Borders */
+  --color-border-light: #d1d5db;
+  --color-border-dark: #374151;
+
+  /* Drag & Drop States */
+  --color-drag-overlay-light: #eef2ff;
+  --color-drag-overlay-dark: rgba(49, 46, 129, 0.2);
+
+  /* Icon Actions */
+  --color-icon-edit-bg-hover: #f3f4f6;
+  --color-icon-delete: #111827;
+  --color-icon-delete-hover: #ef4444;
 
   --animate-slide-down: slideDown 0.3s ease-out;
   @keyframes slideDown {
@@ -25,136 +68,76 @@
   }
 }
 
-* {
-  box-sizing: border-box;
-}
-
-a {
-  font-weight: 500;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-  cursor: pointer;
-}
-
-body {
-  @apply m-0 min-w-xs min-h-screen bg-primaryColor text-primaryText leading-4 font-normal font-poppins max-w-full;
-}
-
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-}
-
-button {
-  @apply bg-formInputbutton;
-  border-radius: 12px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: formInputFocus;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-}
-
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
+@layer base {
+  * {
+    box-sizing: border-box;
   }
-  a:hover {
-    color: #747bff;
+
+  body {
+    @apply m-0 min-w-xs min-h-screen bg-primaryColor text-primaryText leading-4 font-normal font-poppins;
   }
+
+  h1 {
+    @apply text-[3.2em] leading-[1.1];
+  }
+
+  a {
+    @apply font-medium no-underline hover:text-link-hover hover:cursor-pointer transition-colors;
+  }
+
   button {
-    background-color: #f9f9f9;
+    @apply bg-formInputbutton rounded-xl border border-transparent 
+           px-[1.2em] py-[0.6em] text-[1em] font-medium font-[inherit] 
+           cursor-pointer transition-colors duration-250 
+           hover:border-formInputFocus 
+           focus:outline-4 focus:outline-[auto];
+  }
+
+  @media (prefers-color-scheme: light) {
+    :root {
+      color: var(--color-text-light);
+      background-color: var(--color-bg-light);
+    }
+    a:hover {
+      color: var(--color-link-hover-light);
+    }
+    button {
+      background-color: var(--color-btn-bg-light);
+    }
   }
 }
 
-.form-input:focus-visible {
-  outline: none !important;
-}
-.form-input {
-  @apply border rounded-xl text-white bg-secondaryColor border-formInputBorder w-full   p-2 focus:border-formInputFocus focus:bg-primaryColor;
-}
-.form-container {
-  @apply flex mx-auto justify-between gap-3 p-0;
-}
-.form-image {
-  @apply max-w-md w-full  max-sm:hidden;
-}
+@layer components {
+  .task-card-custom {
+    background: radial-gradient(
+      169.23% 169.23% at 41.47% -28.17%,
+      var(--color-task-gradient-start) 0%,
+      var(--color-task-gradient-mid) 55.66%,
+      var(--color-task-gradient-end) 100%
+    );
+    border: 1.96px solid var(--color-task-border);
+  }
 
-.form {
-  @apply flex flex-col items-center justify-center gap-1 p-4 max-w-md w-full;
-}
-.form-input-fields {
-  @apply gap-2 w-full;
-}
+  .toggle-btn-custom {
+    position: relative;
+    border: 2.4px solid transparent;
+    border-radius: 12px;
+    background-clip: padding-box, border-box;
+    background-origin: padding-box, border-box;
+    background-image:
+      linear-gradient(
+        var(--color-formInputbutton),
+        var(--color-formInputbutton)
+      ),
+      linear-gradient(
+        90deg,
+        var(--color-toggle-gradient-start) 0%,
+        var(--color-toggle-gradient-end) 100%
+      );
+  }
 
-.validation-errors {
-  @apply text-red-800 text-sm;
-}
-.line {
-  @apply border-t-1 min-w-24 max-h-0 max-sm:min-w-14;
-}
-.line-text-container {
-  @apply flex flex-row p-2 gap-2 items-center w-max;
-}
-
-.form-buttons {
-  @apply max-w-sm  max-sm:min-w-max w-full mx-auto;
-}
-.form-checkbox {
-  @apply max-w-xs text-xs;
-}
-span {
-  @apply text-xs;
-}
-.switch-text {
-  @apply text-switchText underline cursor-pointer;
-}
-
-.form-details {
-  @apply grid  grid-cols-2 gap-4;
-}
-.details-container {
-  @apply flex m-auto justify-between p-4  items-center content-center;
-}
-
-.form-input-fields {
-  @apply flex flex-col p-3;
-}
-
-.profile-image {
-  @apply max-h-20 max-w-20;
-}
-.form-select {
-  @apply flex flex-col;
-}
-
-.profile-info {
-  @apply flex flex-col items-center gap-2 m-2;
-}
-.form-radio {
-  @apply mr-4 ml-4 mt-2;
-}
-
-.details-form {
-  @apply flex  flex-col items-center;
-}
-
-#ageConfirm {
-  @apply bg-primaryColor;
-}
-
-#dob {
-  @apply max-sm:max-w-[9.2rem];
+  .form-input {
+    @apply border rounded-xl text-white bg-secondaryColor border-formInputBorder w-full p-2 
+           focus:border-formInputFocus focus:bg-primaryColor focus:outline-none;
+  }
 }
