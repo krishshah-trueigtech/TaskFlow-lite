@@ -7,17 +7,28 @@ const TaskForm = () => {
   const formFields = getTaskFormFields(today);
 
   return (
-    <form onSubmit={handleSubmit} className="form">
-      <FormGenerator
-        formFields={formFields}
-        control={control}
-        errors={errors}
-      />
+    <div className="w-full min-w-sm mx-auto p-6">
+      <h2 className="text-2xl font-bold mb-6 text-center text-white">
+        {editingTask ? "Edit Task" : "Create New Task"}
+      </h2>
 
-      <button type="submit" className="submit-btn mt-4">
-        {editingTask ? "Update Task" : "Add Task"}
-      </button>
-    </form>
+      <form onSubmit={handleSubmit} className="flex flex-col gap-5 w-full">
+        <div className="flex flex-col gap-4">
+          <FormGenerator
+            formFields={formFields}
+            control={control}
+            errors={errors}
+          />
+        </div>
+
+        <button
+          type="submit"
+          className="w-full mt-4 py-3 font-semibold text-lg shadow-md hover:shadow-lg transition-all"
+        >
+          {editingTask ? "Update Task" : "Add Task"}
+        </button>
+      </form>
+    </div>
   );
 };
 
