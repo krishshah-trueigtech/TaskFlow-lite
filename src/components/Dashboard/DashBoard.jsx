@@ -5,9 +5,10 @@ import TaskForm from "../Tasks/components/TaskForm.jsx";
 import { useTaskFilter } from "../Tasks/hooks/useTaskFilter.js";
 import { useDebounce } from "../../common/hooks/useDebounce.js";
 import Modal from "../../common/Modal/components/Modal.jsx";
-
+import BulkActionBar from "../Tasks/components/BulkActionBar";
 const DashboardContent = () => {
-  const { tasks, loading, error, openCreateModal } = useTaskContext();
+  const { tasks, loading, error, openCreateModal, selectedTaskIds } =
+    useTaskContext();
   const [searchTerm, setSearchTerm] = useState("");
   const [priorityFilter, setPriorityFilter] = useState("All");
 
@@ -38,7 +39,7 @@ const DashboardContent = () => {
 
         <button onClick={openCreateModal}> New Task</button>
       </div>
-
+      {selectedTaskIds.length > 0 && <BulkActionBar />}
       <TaskBoard tasks={filteredTasks} loading={loading} error={error} />
     </div>
   );
