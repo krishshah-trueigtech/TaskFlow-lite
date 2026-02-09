@@ -1,27 +1,27 @@
 import { useTaskContext } from "../context/TaskContext";
 
 const BulkActionBar = () => {
-  const { selectedTaskIds, bulkStatusUpdate, bulkDelete } = useTaskContext();
+  const { selectedTaskIds, bulkPriorityUpdate, bulkDelete } = useTaskContext();
   return (
     <div className="flex p-4 gap-2 items-center ">
       <>
         <button
-          onClick={() => bulkStatusUpdate("to-do")}
+          onClick={() => bulkPriorityUpdate("Low")}
           className="flex-1 p-2 rounded   text-white"
         >
-          To DO
+          Low
         </button>
         <button
-          onClick={() => bulkStatusUpdate("in-progress")}
+          onClick={() => bulkPriorityUpdate("Medium")}
           className="flex-1 p-2 rounded  text-white"
         >
-          In Progress
+          Medium
         </button>
         <button
-          onClick={() => bulkStatusUpdate("done")}
+          onClick={() => bulkPriorityUpdate("High")}
           className="flex-1 p-2 rounded  text-white "
         >
-          Done
+          High
         </button>
         <button onClick={() => bulkDelete(selectedTaskIds)}>
           {" "}

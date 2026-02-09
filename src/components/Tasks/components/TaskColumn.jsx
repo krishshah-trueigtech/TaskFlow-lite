@@ -12,10 +12,10 @@ const TaskColumn = ({
   return (
     <div
       className={`flex-1 bg-gray-100 dark:bg-columnColor rounded-lg p-3 transition-all duration-300 max-w-sm w-full 
-        ${isCollapsed && "h-[4rem]"}`}
+        `}
     >
       <div
-        className="flex items-center justify-center text-center border-b-2 border-gray-300 dark:border-gray-700 pb-2.5 mb-4 cursor-pointer"
+        className="flex items-center justify-center text-center  border-gray-300 dark:border-gray-700 pb-2.5 mb-4 cursor-pointer"
         onClick={onToggle}
       >
         {!isCollapsed && (
@@ -34,7 +34,7 @@ const TaskColumn = ({
             <div
               ref={provided.innerRef}
               {...provided.droppableProps}
-              className={`flex flex-col gap-2.5 min-h-[12rem] max-h-[29rem] overflow-y-auto  p-1 ${
+              className={`flex flex-col gap-2.5 min-h-[12rem] max-h-[29rem] overflow-y-auto  p-1   ${
                 snapshot.isDraggingOver
                   ? "bg-indigo-50 dark:bg-indigo-900/20 "
                   : "bg-transparent"
