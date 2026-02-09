@@ -64,7 +64,7 @@ const DashboardContent = () => {
         <select
           value={priorityFilter}
           onChange={(e) => setPriorityFilter(e.target.value)}
-          className="form-input p-4 max-w-fit"
+          className="form-input p-2 max-w-fit"
         >
           <option value="All">All Priorities</option>
           <option value="High">High</option>
@@ -72,7 +72,10 @@ const DashboardContent = () => {
           <option value="Low">Low</option>
         </select>
 
-        <button onClick={openCreateModal}> New Task</button>
+        <button className="sm:min-w-max " onClick={openCreateModal}>
+          {" "}
+          New Task
+        </button>
       </div>
       {selectedTaskIds.length > 0 && <BulkActionBar />}
       <TaskBoard tasks={filteredTasks} loading={loading} error={error} />
