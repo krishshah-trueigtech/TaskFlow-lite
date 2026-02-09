@@ -9,6 +9,7 @@
   --color-primaryColor: #200b33;
   --color-primaryText: #fff;
   --color-secondaryColor: #2c0e48;
+  --color-columnColor: #371650;
 
   --animate-slide-down: slideDown 0.3s ease-out;
   @keyframes slideDown {
@@ -57,7 +58,7 @@ button {
   transition: border-color 0.25s;
 }
 button:hover {
-  border-color: #646cff;
+  border-color: formInputFocus;
 }
 button:focus,
 button:focus-visible {
