@@ -9,7 +9,6 @@ const FormGenerator = ({ formFields, control, errors }) => {
     <>
       {formFields.map((field) => {
         const commonProps = {
-          key: field.name,
           name: field.name,
           label: field.label,
           control: control,
