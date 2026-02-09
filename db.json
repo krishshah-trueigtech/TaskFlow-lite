@@ -41,39 +41,21 @@
   ],
   "tasks": [
     {
-      "title": "Mini project",
-      "status": "done",
+      "id": "7214a084-e881-4278-b117-a380e251fc23",
+      "title": "sdaf",
       "priority": "High",
-      "dueDate": "2222-02-22",
-      "assignee": "Admin",
-      "id": "1769492922294"
-    },
-    {
-      "id": "1769513959712",
-      "title": "asdf",
-      "priority": "High",
-      "dueDate": "2222-02-22",
+      "dueDate": "7777-07-07",
       "assignee": "asdf",
-      "status": "done"
+      "status": "in-progress",
+      "isSelected": false
     },
     {
-      "id": "1769590204945",
-      "title": "Refactoredadsf",
+      "id": "46bfa8f9-0a11-4610-95a2-641124fea631",
+      "title": "dfg",
       "priority": "Medium",
-      "dueDate": "22222-02-22",
-      "assignee": "admin",
+      "dueDate": "3333-03-31",
+      "assignee": "vb",
       "status": "in-progress"
-    },
-    {
-      "id": "2312121"
-    },
-    {
-      "id": "1769602108301",
-      "title": "asdf",
-      "priority": "Medium",
-      "dueDate": "2222-02-22",
-      "assignee": "adsf",
-      "status": "to-do"
     }
   ]
 }
