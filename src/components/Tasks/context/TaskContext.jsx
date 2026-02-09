@@ -1,14 +1,24 @@
-import { createContext, useContext, useEffect, useState, useCallback, useMemo } from "react";
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+  useCallback,
+  useMemo,
+} from "react";
 import { useTasks } from "../hooks/useTasks";
 import { useModal } from "../../../common/Modal/context/ModalContext";
+import { toast } from "react-toastify";
+import * as TaskServices from "../../../services/TaskServices.js";
 
 const TaskContext = createContext();
 
 export const TaskProvider = ({ children }) => {
   const taskData = useTasks();
-  const { fetchTasks, updateTask } = taskData;
+  const { tasks, setTasks, fetchTasks, updateTask } = taskData;
   const { openModal, closeModal: closeGlobalModal } = useModal();
   const [editingTask, setEditingTask] = useState(null);
+  const [selectedTaskIds, setSelectedTaskIds] = useState([]);
 
   useEffect(() => {
     fetchTasks();
@@ -19,27 +29,148 @@ export const TaskProvider = ({ children }) => {
     openModal("taskForm");
   }, [openModal]);
 
-  const openEditModal = useCallback((task) => {
-    setEditingTask(task);
-    openModal("taskForm", { editingTask: task });
-  }, [openModal]);
+  const openEditModal = useCallback(
+    (task) => {
+      setEditingTask(task);
+      openModal("taskForm", { editingTask: task });
+    },
+    [openModal],
+  );
 
   const closeModal = useCallback(() => {
     setEditingTask(null);
     closeGlobalModal();
   }, [closeGlobalModal]);
 
-  const onDragEnd = useCallback((result) => {
-    const { destination, source, draggableId } = result;
-    if (
-      !destination ||
-      (destination.droppableId === source.droppableId &&
-        destination.index === source.index)
-    )
-      return;
+  const onDragEnd = useCallback(
+    async (result) => {
+      const { destination, source, draggableId } = result;
+      if (
+        !destination ||
+        (destination.droppableId === source.droppableId &&
+          destination.index === source.index)
+      ){
+        return;
+    }
+        const isSelected = selectedTaskIds.includes(draggableId);
+        const idsToMove = isSelected ? selectedTaskIds : [draggableId];
     
-    updateTask({ id: draggableId, status: destination.droppableId });
-  }, [updateTask]);
+        setTasks((prev) =>
+          prev.map((task) =>
+            idsToMove.includes(task.id)
+              ? { ...task, status: destination.droppableId }
+              : task
+          )
+        );
+        try {
+          await Promise.all(
+            idsToMove.map((id) => 
+              updateTask({ id, status: destination.droppableId })
+            )
+          );
+          setSelectedTaskIds([]); 
+        } catch  {
+          toast.error("Failed to move multiple tasks" );
+        }
+      },
+      [selectedTaskIds, updateTask, setTasks]
+    );
+
+  const toggleTaskSelection = useCallback((taskId) => {
+    setSelectedTaskIds((prev) =>
+      prev.includes(taskId)
+        ? prev.filter((id) => id !== taskId)
+        : [...prev, taskId],
+    );
+  }, []);
+
+  const bulkStatusUpdate = useCallback(
+    async (newStatus) => {
+      if (selectedTaskIds.length === 0) return;
+
+      await Promise.all(
+        selectedTaskIds.map((id) => updateTask({ id, status: newStatus })),
+      );
+      setSelectedTaskIds([]);
+    },
+    [selectedTaskIds, updateTask],
+  );
+
+  const deleteTask = useCallback(
+    (id) => {
+      const taskBackup = tasks.find((t) => t.id === id);
+      if (!taskBackup) return;
+
+      setTasks((prev) => prev.filter((t) => t.id !== id));
+
+      const timerId = setTimeout(async () => {
+        try {
+          await TaskServices.deleteTask({ id });
+        } catch {
+          setTasks((prev) => [...prev, taskBackup]);
+          toast.error("Failed to delete task from server");
+        }
+      }, 10000);
+
+      toast(
+        <div className="flex justify-between items-center">
+          <span>Task deleted</span>
+          <button
+            className="ml-4 bg-white text-primaryColor px-2 py-1 rounded text-xs font-bold"
+            onClick={() => {
+              clearTimeout(timerId);
+              setTasks((prev) => [...prev, taskBackup]);
+              toast.dismiss();
+            }}
+          >
+            UNDO
+          </button>
+        </div>,
+        { autoClose: 10000, closeOnClick: false },
+      );
+    },
+    [tasks, setTasks],
+  );
+
+  const bulkDelete = useCallback(async () => {
+    if (selectedTaskIds.length === 0) return;
+
+    const tasksToRestore = tasks.filter((task) =>
+      selectedTaskIds.includes(task.id),
+    );
+    const idsToDelete = [...selectedTaskIds];
+
+    setTasks((prev) => prev.filter((task) => !idsToDelete.includes(task.id)));
+    setSelectedTaskIds([]);
+
+    const timerId = setTimeout(async () => {
+      try {
+        await Promise.all(
+          idsToDelete.map((id) => TaskServices.deleteTask({ id })),
+        );
+      } catch  {
+        setTasks((prev) => [...prev, ...tasksToRestore]);
+        toast.error("Bulk delete failed on server");
+      }
+    }, 10000);
+
+    toast(
+      <div className="flex justify-between items-center">
+        <span>{idsToDelete.length} tasks deleted</span>
+        <button
+          className="ml-4 bg-white text-primaryColor px-2 py-1 rounded text-xs font-bold"
+          onClick={() => {
+            clearTimeout(timerId);
+            setTasks((prev) => [...prev, ...tasksToRestore]);
+            toast.dismiss();
+          }}
+        >
+          UNDO
+        </button>
+      </div>,
+      { autoClose: 10000, closeOnClick: false },
+    );
+  }, [selectedTaskIds, tasks, setTasks]);
 
   const contextValue = useMemo(
     () => ({
@@ -49,14 +180,24 @@ export const TaskProvider = ({ children }) => {
       openEditModal,
       closeModal,
       onDragEnd,
+      toggleTaskSelection,
+      selectedTaskIds,
+      bulkStatusUpdate,
+      bulkDelete,
+      deleteTask,
     }),
     [
       taskData,
+      deleteTask,
       editingTask,
       openCreateModal,
       openEditModal,
       closeModal,
       onDragEnd,
+      selectedTaskIds,
+      toggleTaskSelection,
+      bulkStatusUpdate,
+      bulkDelete,
     ],
   );
 

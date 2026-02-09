@@ -65,6 +65,7 @@ export const useTasks = () => {
 
   return {
     tasks,
+    setTasks,
     loading,
     error,
     fetchTasks,
