@@ -5,16 +5,23 @@ import { Dashboard } from "../components/Dashboard/DashBoard.jsx";
 const AppRoutes = () => {
   return (
     <Routes>
-      <Route
-        path="/"
-        element={
-          <div className="p-4">Welcome to TaskFlow-Lite. Please Login.</div>
-        }
-      />
+      <Route element={<ProtectedRoute requireAuth={false} />}>
+        <Route
+          path="/"
+          element={
+            <div className="p-4 text-center mt-10">
+              <h1 className="text-2xl font-bold">Welcome to TaskFlow-Lite</h1>
+              <p>Please open the menu to Login or Sign Up.</p>
+            </div>
+          }
+        />
+      </Route>
+
       <Route element={<ProtectedRoute />}>
         <Route path="/dashboard" element={<Dashboard />} />
       </Route>
-      <Route path="*" element={<Navigate to="/dashboard" />} />
+
+      <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );
 };
