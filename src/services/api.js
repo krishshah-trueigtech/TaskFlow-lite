@@ -2,33 +2,36 @@ import Axios from "axios";
 import { toast } from "react-toastify";
 
 const API_URL = import.meta.env.VITE_API_URL;
-if (!API_URL) throw new Error("VITE_API_URL is not defined");
 
 const axiosApi = Axios.create({
   baseURL: API_URL,
 });
 
-axiosApi.interceptors.request.use(
-  (config) => {
-    config.headers["Content-Type"] = "application/json";
-    return config;
-  },
-  (error) => Promise.reject(error),
-);
+export let lastFailedRequest = null;
 
 axiosApi.interceptors.response.use(
   (response) => response?.data,
   (error) => {
+    lastFailedRequest = error.config;
+
     const message =
       error.response?.data?.message || error?.message || "Something went wrong";
 
     if (error.response?.status === 401) {
       toast.error("Session expired. Please login again.");
-      localStorage.removeItem("user");
+      localStorage.removeItem("token");
     }
 
-    return Promise.reject(message);
+    const enhancedError = new Error(message);
+    enhancedError.isRetryable = true;
+
+    return Promise.reject(enhancedError);
   },
 );
+
+export const retryLastRequest = () => {
+  if (!lastFailedRequest) return Promise.reject("No failed request to retry");
+  return axiosApi(lastFailedRequest);
+};
 
 export default axiosApi;
