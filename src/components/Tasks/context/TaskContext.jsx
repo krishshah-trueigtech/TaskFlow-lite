@@ -10,12 +10,18 @@ import { useTasks } from "../hooks/useTasks";
 import { useModal } from "../../../common/Modal/context/ModalContext";
 import { toast } from "react-toastify";
 import * as TaskServices from "../../../services/TaskServices.js";
+import { retryLastRequest } from "../../../services/api";
 
 const TaskContext = createContext();
 
 export const TaskProvider = ({ children }) => {
   const taskData = useTasks();
-  const { tasks, setTasks, fetchTasks, updateTask } = taskData;
+  const { 
+    tasks, setTasks, error, setError, fetchTasks, 
+    updateTask: baseUpdate, 
+    deleteTask: baseDelete, 
+    createTask: baseCreate 
+  } = taskData;
   const { openModal, closeModal: closeGlobalModal } = useModal();
   const [editingTask, setEditingTask] = useState(null);
   const [selectedTaskIds, setSelectedTaskIds] = useState([]);
@@ -23,6 +29,40 @@ export const TaskProvider = ({ children }) => {
   useEffect(() => {
     fetchTasks();
   }, [fetchTasks]);
+
+  const handleRetry = useCallback(async () => {
+    setError(null);
+    try {
+      await retryLastRequest();
+      toast.success("Retry successful!");
+      await fetchTasks();
+    } catch (err) {
+      setError(`Retry failed: ${err}`);
+      toast.error("Retry attempt failed.");
+    }
+  }, [fetchTasks, setError]);
+
+  const createTask = useCallback(
+    async (data) => {
+      const result = await baseCreate(data);
+      if (result) {
+        toast.success("Task created successfully!");
+      }
+    },
+    [baseCreate],
+  );
+
+  const updateTask = useCallback(
+    async (data) => {
+      const success = await baseUpdate(data);
+      if (success) {
+        toast.info("Task updated successfully!");
+      } else {
+        toast.error("Update failed. You can retry from the dashboard.");
+      }
+    },
+    [baseUpdate],
+  );
 
   const openCreateModal = useCallback(() => {
     setEditingTask(null);
@@ -49,32 +89,32 @@ export const TaskProvider = ({ children }) => {
         !destination ||
         (destination.droppableId === source.droppableId &&
           destination.index === source.index)
-      ){
+      ) {
         return;
-    }
-        const isSelected = selectedTaskIds.includes(draggableId);
-        const idsToMove = isSelected ? selectedTaskIds : [draggableId];
-    
-        setTasks((prev) =>
-          prev.map((task) =>
-            idsToMove.includes(task.id)
-              ? { ...task, status: destination.droppableId }
-              : task
-          )
+      }
+      const isSelected = selectedTaskIds.includes(draggableId);
+      const idsToMove = isSelected ? selectedTaskIds : [draggableId];
+
+      setTasks((prev) =>
+        prev.map((task) =>
+          idsToMove.includes(task.id)
+            ? { ...task, status: destination.droppableId }
+            : task,
+        ),
+      );
+      try {
+        await Promise.all(
+          idsToMove.map((id) =>
+            updateTask({ id, status: destination.droppableId }),
+          ),
         );
-        try {
-          await Promise.all(
-            idsToMove.map((id) => 
-              updateTask({ id, status: destination.droppableId })
-            )
-          );
-          setSelectedTaskIds([]); 
-        } catch  {
-          toast.error("Failed to move multiple tasks" );
-        }
-      },
-      [selectedTaskIds, updateTask, setTasks]
-    );
+        setSelectedTaskIds([]);
+      } catch {
+        toast.error("Failed to move multiple tasks");
+      }
+    },
+    [selectedTaskIds, updateTask, setTasks],
+  );
 
   const toggleTaskSelection = useCallback((taskId) => {
     setSelectedTaskIds((prev) =>
@@ -104,19 +144,15 @@ export const TaskProvider = ({ children }) => {
       setTasks((prev) => prev.filter((t) => t.id !== id));
 
       const timerId = setTimeout(async () => {
-        try {
-          await TaskServices.deleteTask({ id });
-        } catch {
-          setTasks((prev) => [...prev, taskBackup]);
-          toast.error("Failed to delete task from server");
-        }
+        const success = await baseDelete(id);
+        if (success) toast.success("Task deleted permanently");
       }, 10000);
 
       toast(
         <div className="flex justify-between items-center">
           <span>Task deleted</span>
           <button
-            className="ml-4 bg-white text-primaryColor px-2 py-1 rounded text-xs font-bold"
+            className="ml-4 bg-white text-purple-900 px-2 py-1 rounded text-xs font-bold"
             onClick={() => {
               clearTimeout(timerId);
               setTasks((prev) => [...prev, taskBackup]);
@@ -129,7 +165,7 @@ export const TaskProvider = ({ children }) => {
         { autoClose: 10000, closeOnClick: false },
       );
     },
-    [tasks, setTasks],
+    [tasks, setTasks, baseDelete],
   );
 
   const bulkDelete = useCallback(async () => {
@@ -148,7 +184,7 @@ export const TaskProvider = ({ children }) => {
         await Promise.all(
           idsToDelete.map((id) => TaskServices.deleteTask({ id })),
         );
-      } catch  {
+      } catch {
         setTasks((prev) => [...prev, ...tasksToRestore]);
         toast.error("Bulk delete failed on server");
       }
@@ -172,6 +208,17 @@ export const TaskProvider = ({ children }) => {
     );
   }, [selectedTaskIds, tasks, setTasks]);
 
+  const bulkPriorityUpdate = useCallback(
+    async (newPriority) => {
+      if (selectedTaskIds.length === 0) return;
+      await Promise.all(
+        selectedTaskIds.map((id) => updateTask({ id, priority: newPriority })),
+      );
+      setSelectedTaskIds([]);
+    },
+    [selectedTaskIds, updateTask],
+  );
+
   const contextValue = useMemo(
     () => ({
       ...taskData,
@@ -185,8 +232,13 @@ export const TaskProvider = ({ children }) => {
       bulkStatusUpdate,
       bulkDelete,
       deleteTask,
+      bulkPriorityUpdate,
+      createTask,
+      error,
+      handleRetry,
     }),
     [
+      createTask,
       taskData,
       deleteTask,
       editingTask,
@@ -198,6 +250,9 @@ export const TaskProvider = ({ children }) => {
       toggleTaskSelection,
       bulkStatusUpdate,
       bulkDelete,
+      bulkPriorityUpdate,
+      error,
+      handleRetry,
     ],
   );
 
