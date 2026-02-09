@@ -8,7 +8,22 @@ export const useTasks = () => {
     "in-progress": false,
     done: false,
   });
+  
   const [error, setError] = useState(null);
+  const [failedAction, setFailedAction] = useState(null);
+
+  const handleError = (err, actionFn) => {
+    setError(err.message || "Something went wrong");
+    setFailedAction(() => actionFn);
+  };
+
+  const retry = useCallback(() => {
+    if (failedAction) {
+      setError(null);      
+      setFailedAction(null);
+      failedAction();       
+    }
+  }, [failedAction]);
 
   const fetchTasks = useCallback(async () => {
     setLoading({ "to-do": true, "in-progress": true, done: true });
@@ -17,64 +32,60 @@ export const useTasks = () => {
       const response = await TaskServices.fetchTasks();
       setTasks(response);
     } catch (err) {
-      setError(err.message || "Something went wrong");
+      handleError(err, fetchTasks);
     } finally {
       setLoading({ "to-do": false, "in-progress": false, done: false });
     }
-  }, []);
+  }, []); 
+
+  const updateTask = useCallback(async (taskData) => {
+
+    setTasks((prev) =>
+      prev.map((t) => (t.id === taskData.id ? { ...t, ...taskData } : t))
+    );
+
+    try {
+      await TaskServices.updateTask(taskData);
+      return true;
+    } catch (err) {
+      fetchTasks(); 
+      handleError(err, () => updateTask(taskData)); 
+      return false;
+    }
+  }, [fetchTasks]);
+
+  const deleteTask = useCallback(async (id) => {
+
+    setTasks((prev) => prev.filter((t) => t.id !== id));
+
+    try {
+      await TaskServices.deleteTask({ id });
+      return true;
+    } catch (err) {
+      fetchTasks(); 
+      handleError(err, () => deleteTask(id));
+      return false;
+    }
+  }, [fetchTasks]);
 
   const createTask = useCallback(async (taskData) => {
     try {
       const newTask = await TaskServices.createTask(taskData);
       setTasks((prev) => [...prev, newTask]);
+      return true;
     } catch (err) {
-      setError(err.message || "Something went wrong");
+      handleError(err, () => createTask(taskData));
+      return false;
     }
   }, []);
-
-  const updateTask = useCallback(
-    async (taskData) => {
-      const previousTasks = [...tasks];
-
-      setTasks((prev) =>
-        prev.map((task) =>
-          task.id === taskData.id ? { ...task, ...taskData } : task,
-        ),
-      );
-      try {
-        await TaskServices.updateTask(taskData);
-        return true;
-      } catch (err) {
-        setTasks(previousTasks);
-        setError(err);
-        return false;
-      }
-    },
-    [tasks],
-  );
-
-  const deleteTask = useCallback(
-    async (id) => {
-      const previousTasks = [...tasks];
-      setTasks((prev) => prev.filter((task) => task.id !== id));
-
-      try {
-        await TaskServices.deleteTask({ id });
-        return true;
-      } catch (err) {
-        setTasks(previousTasks);
-        setError(err);
-        return false;
-      }
-    },
-    [tasks],
-  );
 
   return {
     tasks,
     setTasks,
     loading,
-    error,
+    error,   
+    setError,
+    retry,   
     fetchTasks,
     createTask,
     updateTask,
