@@ -43,10 +43,10 @@
     {
       "id": "7214a084-e881-4278-b117-a380e251fc23",
       "title": "sdaf",
-      "priority": "medium",
+      "priority": "High",
       "dueDate": "7777-07-07",
       "assignee": "asdf",
-      "status": "in-progress",
+      "status": "to-do",
       "isSelected": false
     },
     {
@@ -55,7 +55,7 @@
       "priority": "Medium",
       "dueDate": "3333-03-31",
       "assignee": "vb",
-      "status": "done",
+      "status": "in-progress",
       "isSelected": false,
       "multiSelectionCount": 0
     }
