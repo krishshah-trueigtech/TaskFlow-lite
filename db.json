@@ -41,28 +41,12 @@
   ],
   "tasks": [
     {
-      "id": "t-101",
-      "title": "Fix navigation bar responsiveness",
-      "priority": "High",
-      "status": "to-do",
-      "dueDate": "2026-02-15",
-      "assignee": "Alex Johnson"
-    },
-    {
       "id": "t-102",
       "title": "Update user profile layout",
       "priority": "Medium",
       "status": "in-progress",
       "dueDate": "2026-02-18",
       "assignee": "Sarah Smith"
-    },
-    {
-      "id": "t-103",
-      "title": "Database backup and optimization",
-      "priority": "High",
-      "status": "done",
-      "dueDate": "2026-02-10",
-      "assignee": "Mike Chen"
     },
     {
       "id": "t-104",
@@ -79,14 +63,6 @@
       "status": "in-progress",
       "dueDate": "2026-02-20",
       "assignee": "David Wilson"
-    },
-    {
-      "id": "t-106",
-      "title": "Write documentation for authentication",
-      "priority": "Medium",
-      "status": "done",
-      "dueDate": "2026-02-12",
-      "assignee": "Lisa Anderson"
     },
     {
       "id": "t-107",
@@ -111,6 +87,30 @@
       "status": "to-do",
       "dueDate": "2026-02-22",
       "assignee": "Emily Davis"
+    },
+    {
+      "id": "t-101",
+      "title": "Fix navigation bar responsiveness",
+      "priority": "Medium",
+      "status": "to-do",
+      "dueDate": "2026-02-15",
+      "assignee": "Alex Johnson"
+    },
+    {
+      "id": "t-103",
+      "title": "Database backup and optimization",
+      "priority": "High",
+      "status": "to-do",
+      "dueDate": "2026-02-10",
+      "assignee": "Mike Chen"
+    },
+    {
+      "id": "t-106",
+      "title": "Write documentation for authentication",
+      "priority": "Medium",
+      "status": "done",
+      "dueDate": "2026-02-12",
+      "assignee": "Lisa Anderson"
     },
     {
       "id": "t-110",

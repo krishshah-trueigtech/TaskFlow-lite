@@ -154,7 +154,7 @@ export const TaskProvider = ({ children }) => {
           <div className="flex justify-between items-center">
             <span>Task deleted</span>
             <button
-              className="ml-4 bg-white text-purple-900 px-2 py-1 rounded text-xs font-bold"
+              className="ml-4 bg-green-400 text-purple-900 px-2 py-1 rounded text-xs font-bold"
               onClick={() => {
                 baseCreate(taskBackup);
                 toast.dismiss();
@@ -190,7 +190,7 @@ export const TaskProvider = ({ children }) => {
         <div className="flex justify-between items-center">
           <span>{idsToDelete.length} tasks deleted</span>
           <button
-            className="ml-4 bg-white text-primaryColor px-2 py-1 rounded text-xs font-bold"
+            className="ml-4 bg-green-400 text-primaryColor px-2 py-1 rounded text-xs font-bold"
             onClick={() => {
               tasksToRestore.forEach((t) => baseCreate(t));
               toast.dismiss();
